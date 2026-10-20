@@ -14,3 +14,4 @@
 - [x] Knapparna i "Vill du veta mer?" matchar resterande startsidan (samma hörn, färg, storlek)
 - [x] Admin-inloggning för frank@konnektofsweden.se (e-post/lösenord + adminroll)
 - [x] Klickbar, vänsterställd sidstig på relevanta sidor med uppdragets namn på detaljsidan
+- [ ] Uppdatera sårbara underpaket för @tailwindcss/vite och @tanstack/react-start; verifiera låsfil, säkerhetsskanning och appkontroll.
