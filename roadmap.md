@@ -15,5 +15,5 @@
 - [x] Admin-inloggning för frank@konnektofsweden.se (e-post/lösenord + adminroll)
 - [x] Klickbar, vänsterställd sidstig på relevanta sidor med uppdragets namn på detaljsidan
 - [x] Uppdatera sårbara underpaket för @tailwindcss/vite och @tanstack/react-start; låsfilen innehåller source-map-js 1.2.2 och js-yaml 4.3.2, skanningen hittar inga kända produktionssårbarheter, 25 tester godkända och build OK.
-- [ ] Kort på /uppdrag: tydligare avgränsning (grön topplist, tjockare kant, skugga)
+- [x] Kort på /uppdrag: tydligare avgränsning (grön topplist, tjockare kant, skugga)
 - [x] Arkiv: tydligt felmeddelande med Försök igen-knapp när arkiverade uppdrag inte kan hämtas
