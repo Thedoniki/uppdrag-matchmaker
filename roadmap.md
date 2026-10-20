@@ -12,6 +12,9 @@
 - [x] Ny sektion "Samarbete" på startsidan mellan "Så fungerar det" och footern (foto ur uppladdad mockup)
 - [x] Menyordning: Hem/Om projektet/Samarbetspartners före Uppdragsbanken-rullgardinen
 - [x] Knapparna i "Vill du veta mer?" matchar resterande startsidan (samma hörn, färg, storlek)
-- [x] Admin-inloggning för frank@konnektofsweden.se (e-post/lösenord + adminroll)
+- [x] Admin-inloggning (e-post/lösenord + adminroll; mejlet ändrat till techtalentuppdrag@admin.se)
 - [x] Klickbar, vänsterställd sidstig på relevanta sidor med uppdragets namn på detaljsidan
 - [x] Uppdatera sårbara underpaket för @tailwindcss/vite och @tanstack/react-start; låsfilen innehåller source-map-js 1.2.2 och js-yaml 4.3.2, skanningen hittar inga kända produktionssårbarheter, 25 tester godkända och build OK.
+- [x] Kort på /uppdrag: tydligare avgränsning (grön topplist, tjockare kant, skugga)
+- [x] Arkiv: tydligt felmeddelande med Försök igen-knapp när arkiverade uppdrag inte kan hämtas
+- [x] Byt admin-mejl till techtalentuppdrag@admin.se (samma lösenord), verifierat
