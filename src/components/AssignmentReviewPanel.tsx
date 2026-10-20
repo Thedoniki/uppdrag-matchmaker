@@ -119,7 +119,10 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
               <p className="min-h-44 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
             </div>
             <div className="flex flex-col">
-              <label htmlFor={`review-${assignment.id}`} className={`${SECTION_LABEL} block`}>Kompletterad beskrivning</label>
+              <div className="mb-2 flex items-baseline justify-between gap-3">
+                <label htmlFor={`review-${assignment.id}`} className="text-sm font-bold uppercase tracking-wide text-muted-foreground">Kompletterad beskrivning</label>
+                <span className="text-sm text-muted-foreground">{draft.length}/600 tecken</span>
+              </div>
               <textarea
                 id={`review-${assignment.id}`}
                 value={draft}
@@ -128,7 +131,6 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
                 rows={8}
                 className="min-h-44 w-full flex-1 resize-none rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
               />
-              <p className="mt-2 text-right text-sm text-muted-foreground">{draft.length}/600 tecken</p>
             </div>
           </section>
 
