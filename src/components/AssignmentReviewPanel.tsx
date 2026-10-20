@@ -83,7 +83,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
     </div>
     {saved && <p role="status" className="mt-4 rounded-lg bg-secondary px-4 py-3 font-semibold text-secondary-foreground">Den bekräftade beskrivningen är sparad.</p>}
     <Dialog open={opened} onOpenChange={open => { if (!saving) { setOpened(open); if (!open) setConfirming(false); } }}>
-      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-3xl gap-6 overflow-y-auto rounded-xl p-6 sm:p-8">
+      <DialogContent className="max-h-[90dvh] w-[calc(100%-1.5rem)] max-w-5xl gap-5 overflow-y-auto rounded-xl p-5 sm:p-7">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-2xl leading-snug">{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
           <DialogDescription className="text-base">{assignment.title}</DialogDescription>
@@ -104,7 +104,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
 
           {result.missing.length ? <section>
             <h3 className="text-lg font-bold">Saknade uppgifter</h3>
-            <ul className="mt-3 space-y-3">
+            <ul className="mt-3 grid gap-3 md:grid-cols-2">
               {result.missing.map((item, index) => <li key={index} className="rounded-xl border border-border bg-card p-4 shadow-soft">
                 <h4 className="font-bold">{item.label}</h4>
                 <p className="mt-1 text-sm text-muted-foreground">{item.reason}</p>

@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Granskningsdialogen: bättre avstånd, bakgrundsfärger och lämpligare placering av beskrivningstexten.
+- [ ] Granskningsdialogen: bredare så mörkret runt den minskar, tätare avstånd, tydligare bakgrundsrutor och lämpligare placering av beskrivningstexten.
 - [x] Flytta AI-granskning till varje uppdragskort och verifiera dialogen utan krasch.
 - [x] AI-granskning i adminvyn: saknade uppgifter, förhandsgranskning och uttryckligt godkännande före ändring.
 - [x] Meny: proportionerliga meny-/stängikoner och linjerade loggor, länkar och rullgardinsmeny.
