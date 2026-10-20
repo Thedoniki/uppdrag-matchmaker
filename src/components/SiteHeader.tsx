@@ -32,6 +32,11 @@ export function SiteHeader() {
   const close = () => setOpen(false);
   const links = (
     <>
+      {siteLinks.map((l) => (
+        <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className={linkBase} onClick={close}>
+          {l.label}
+        </a>
+      ))}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className={`${linkBase} h-auto text-base`}>
@@ -53,11 +58,6 @@ export function SiteHeader() {
           {user ? <DropdownMenuItem className="px-3 py-3 text-base" onSelect={() => { void signOut(); }}>Logga ut</DropdownMenuItem> : <DropdownMenuItem asChild className="px-3 py-3 text-base"><Link to="/auth" onClick={close}>Administratörsinloggning</Link></DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
-      {siteLinks.map((l) => (
-        <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className={linkBase} onClick={close}>
-          {l.label}
-        </a>
-      ))}
     </>
   );
 

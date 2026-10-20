@@ -9,3 +9,5 @@
 - [x] Fixa utseendet på uppdragssidan (/uppdrag/$id) enligt UX – hel kortlayout markerad av användaren
 - [x] Admin ser inte Ta bort/Arkivera: behörigheten uppdateras nu automatiskt vid fokus/ny flik (AuthProvider); testad med admin-session
 - [x] Ta bort/Arkivera syns för admin även efter omladdning
+- [x] Ny sektion "Samarbete" på startsidan mellan "Så fungerar det" och footern (foto ur uppladdad mockup)
+- [x] Menyordning: Hem/Om projektet/Samarbetspartners före Uppdragsbanken-rullgardinen
