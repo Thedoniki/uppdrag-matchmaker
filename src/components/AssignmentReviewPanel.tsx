@@ -107,8 +107,8 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
             <ul className="grid gap-3 md:grid-cols-2">
               {result.missing.map((item, index) => <li key={index} className="flex flex-col rounded-xl border border-border bg-card p-4 shadow-soft">
                 <h4 className="text-lg font-bold">{item.label}</h4>
-                <p className="mt-1.5 mb-3 text-base leading-relaxed text-foreground/85">{item.reason}</p>
-                <p className="mt-auto rounded-lg bg-muted/70 px-3 py-2 text-base font-semibold text-foreground">{item.question}</p>
+                <p className="mt-1.5 min-h-14 text-base leading-relaxed text-foreground/85">{item.reason}</p>
+                <p className="mt-3 rounded-lg bg-muted/70 px-3 py-2 text-base font-semibold text-foreground">{item.question}</p>
               </li>)}
             </ul>
           </section> : <p className="rounded-xl border border-border bg-card p-4 text-base text-foreground/85">Inga tydligt saknade uppgifter hittades.</p>}
