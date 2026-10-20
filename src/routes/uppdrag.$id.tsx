@@ -40,7 +40,7 @@ function DetailPage() {
   if (!a) return null;
 
   return (
-    <section className="mx-auto w-full max-w-full px-3 py-6 sm:max-w-2xl sm:px-6 sm:py-8 lg:max-w-4xl xl:max-w-5xl">
+    <section className="mx-auto w-full max-w-full px-3 py-6 sm:max-w-2xl sm:px-6 sm:py-10 lg:max-w-4xl">
       <Link
         to="/uppdrag"
         className="group inline-flex items-center gap-2 font-bold text-primary hover:text-primary-hover"
@@ -61,7 +61,7 @@ function DetailPage() {
           </div>
 
           <div className="space-y-4 px-4 py-5 sm:px-6 md:px-8 md:py-6">
-            <h1 className="break-words text-3xl md:text-4xl">{a.title}</h1>
+            <h1 className="break-words text-3xl leading-tight md:text-4xl">{a.title}</h1>
 
             <dl className="grid gap-3 sm:grid-cols-2">
               <div className="flex items-start gap-3 rounded-lg border border-border bg-muted/40 p-3">
