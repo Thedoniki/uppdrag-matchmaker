@@ -74,8 +74,6 @@ function Index() {
               <AssignmentCard a={a} />
             </Reveal>
           ))}
-        </div>
-      </section>
     </>
   );
 }
