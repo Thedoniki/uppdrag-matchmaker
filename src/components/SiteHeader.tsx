@@ -2,6 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAppAuth } from "./AuthProvider";
+import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
+import { supabase } from "@/integrations/supabase/client";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import tttSymbol from "@/assets/tech-talent-official-symbol.svg.asset.json";
 import tttWordmark from "@/assets/tech-talent-official-wordmark.svg.asset.json";
@@ -9,6 +13,15 @@ import tttWordmark from "@/assets/tech-talent-official-wordmark.svg.asset.json";
 const linkBase = "whitespace-nowrap rounded-lg px-3 py-2 font-semibold text-foreground transition-colors hover:text-primary";
 
 export function SiteHeader() {
+  const { user } = useAppAuth();
+  const qc = useQueryClient();
+  const navigate = useNavigate();
+  async function signOut() {
+    await qc.cancelQueries(); qc.clear();
+    await supabase.auth.signOut();
+    close();
+    await navigate({ to: "/auth", replace: true });
+  }
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   const links = (
@@ -30,6 +43,8 @@ export function SiteHeader() {
           <DropdownMenuItem asChild className="px-3 py-3 text-base">
             <a href="mailto:info@techtraineetalent.se" onClick={close}>Kontakta oss</a>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          {user ? <DropdownMenuItem className="px-3 py-3 text-base" onSelect={() => { void signOut(); }}>Logga ut</DropdownMenuItem> : <DropdownMenuItem asChild className="px-3 py-3 text-base"><Link to="/auth" onClick={close}>Administratörsinloggning</Link></DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
       <a href="https://techtraineetalent.se" target="_blank" rel="noreferrer" className={linkBase}>

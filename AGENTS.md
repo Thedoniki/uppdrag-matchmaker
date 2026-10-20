@@ -14,3 +14,6 @@
 - Use the shared submission schema for conditional form validation and the Shadcn calendar for date selection, so disabled dates match validation bounds.
 - Keep the selected organisation type in its constrained column and custom descriptions in the nullable organisation_type_other column, preserving compatibility with existing assignments.
 - Use one shared dropdown for assignment navigation in desktop and mobile headers so both expose the same destinations.
+- Store admin roles only in protected user_roles; assignment deletion and archive updates are authorized by database RLS, never browser state alone.
+- Keep archived assignments out of public list/detail queries; authenticated archive reads use server functions with RLS and admin validation.
+- Maintain a single AuthProvider session subscriber in the root to synchronize roles, navigation and query caches.
