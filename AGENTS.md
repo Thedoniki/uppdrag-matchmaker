@@ -13,3 +13,4 @@
 - Shared header/footer live in `src/routes/__root.tsx`; Swedish URL slugs (/uppdrag, /lamna-uppdrag, /integritet).
 - Use the shared submission schema for conditional form validation and the Shadcn calendar for date selection, so disabled dates match validation bounds.
 - Keep the selected organisation type in its constrained column and custom descriptions in the nullable organisation_type_other column, preserving compatibility with existing assignments.
+- Use one shared dropdown for assignment navigation in desktop and mobile headers so both expose the same destinations.
