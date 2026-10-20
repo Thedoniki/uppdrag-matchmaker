@@ -1,7 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { generateResponse, GatewayError } from "@lovable.dev/ai-gateway";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
-import { confirmReviewSchema, reviewSchema } from "./assignment-review";
+import { confirmReviewSchema, markReviewedSchema, reviewSchema } from "./assignment-review";
 import { z } from "zod";
 
 export const reviewAssignment = createServerFn({ method: "POST" })
@@ -38,13 +38,55 @@ export const reviewAssignment = createServerFn({ method: "POST" })
     }
   });
 
+// Review state is admin-only: it is read through this server function so reviewed_at never enters the public list query.
+export const assignmentReviewStates = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: Record<string, never> = {}) => z.object({}).strict().parse(input ?? {}))
+  .handler(async ({ context }) => {
+    const { data: admin, error: roleError } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
+    if (roleError || !admin) throw new Error("Åtkomst nekad.");
+    const { data: rows, error } = await context.supabase.from("assignments")
+      .select("id,reviewed_at")
+      .is("archived_at", null)
+      .eq("status", "Ny")
+      .order("created_at", { ascending: false });
+    if (error) throw new Error("Granskningsstatus kunde inte laddas.");
+    return rows ?? [];
+  });
+
+export const markAssignmentReviewed = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((input: z.infer<typeof markReviewedSchema>) => markReviewedSchema.parse(input))
+  .handler(async ({ data, context }) => {
+    const { data: admin, error: roleError } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
+    if (roleError || !admin) throw new Error("Åtkomst nekad.");
+    const { data: updated, error } = await context.supabase.from("assignments")
+      .update({ reviewed_at: new Date().toISOString() })
+      .eq("id", data.id)
+      .eq("status", "Ny")
+      .is("archived_at", null)
+      .is("reviewed_at", null)
+      .select("id")
+      .maybeSingle();
+    if (error) throw new Error("Granskningsstatus kunde inte sparas.");
+    if (!updated) throw new Error("Uppdraget har redan granskats, ändrats eller arkiverats. Ladda om sidan.");
+    return { id: updated.id };
+  });
+
 export const confirmAssignmentReview = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: z.infer<typeof confirmReviewSchema>) => confirmReviewSchema.parse(input))
   .handler(async ({ data, context }) => {
     const { data: admin, error: roleError } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "admin" });
     if (roleError || !admin) throw new Error("Åtkomst nekad.");
-    const { data: updated, error } = await context.supabase.from("assignments").update({ need: data.need }).eq("id", data.id).eq("need", data.original).eq("status", "Ny").is("archived_at", null).select("id").maybeSingle();
+    const { data: updated, error } = await context.supabase.from("assignments")
+      .update({ need: data.need, reviewed_at: new Date().toISOString() })
+      .eq("id", data.id)
+      .eq("need", data.original)
+      .eq("status", "Ny")
+      .is("archived_at", null)
+      .select("id")
+      .maybeSingle();
     if (error) throw new Error("Ändringen kunde inte sparas. Din text finns kvar.");
     if (!updated) throw new Error("Uppdraget har ändrats eller arkiverats. Ladda om sidan och granska den senaste versionen.");
     return { id: updated.id };
