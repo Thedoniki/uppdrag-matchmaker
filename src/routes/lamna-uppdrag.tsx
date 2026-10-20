@@ -125,7 +125,11 @@ function SubmitPage() {
           <h2 className="mt-4 text-3xl">Tack! Vi har tagit emot er förfrågan.</h2>
           <p className="mt-2 text-lg">Vi granskar ert uppdrag och hör av oss om det passar våra deltagare.</p>
           <div className="mt-6 flex flex-wrap gap-4">
-            <Link to="/uppdrag" className={btnPrimary}>Se uppdraget i listan</Link>
+            {isAdmin ? (
+              <Link to="/uppdrag" className={btnPrimary}>Se uppdraget i listan</Link>
+            ) : (
+              <button type="button" className={btnPrimary} onClick={() => setDoneId(null)}>Lämna ett nytt uppdrag</button>
+            )}
             <Link to="/" className={btnSecondary}>Tillbaka till startsidan</Link>
           </div>
         </motion.div>
