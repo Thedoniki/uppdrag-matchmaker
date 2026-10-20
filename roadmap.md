@@ -1,6 +1,7 @@
 # Uppgifter
-- [ ] Uppdatera kontaktinformationen och Kontakta oss till info@techtraineetalent.se och Helsingborg, Sverige.
-- [ ] Ersätt Anmäl intresse med Ta bort och Arkivera efter beslut om vem som får hantera uppdrag.
+- [x] Uppdatera kontaktinformationen och Kontakta oss till info@techtraineetalent.se och Helsingborg, Sverige.
+- [x] Ersätt Anmäl intresse med Ta bort och Arkivera endast för administratörer.
+- [ ] Tilldela första administratören och testa arkivering/radering inloggat. Blockerat: inget användarkonto finns; användaren behöver logga in och ange vilket konto som ska vara administratör.
 - [x] Ersätt sidhuvudets loggor med uppladdad symbol och ordmärke till höger.
 - [x] Samla uppdragslänkar och Kontakta oss under Uppdragsbanken.
 - [x] Kontrollera meny, länkar och loggor.
