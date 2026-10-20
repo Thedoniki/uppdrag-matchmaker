@@ -7,6 +7,13 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  vite: {
+    optimizeDeps: {
+      // Keep the admin-only dialog in the initial React dependency graph so
+      // opening the admin view cannot introduce a second optimized React copy.
+      include: ["react", "react-dom", "react-dom/client", "react/jsx-runtime", "@radix-ui/react-dialog"],
+    },
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
