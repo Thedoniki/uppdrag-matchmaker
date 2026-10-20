@@ -1,7 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { assignmentsQuery } from "@/lib/assignments";
-import { AssignmentCard } from "@/components/AssignmentCard";
+import { Reveal } from "@/components/Reveal";
 import { Reveal } from "@/components/Reveal";
 import { arrow, btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
 
