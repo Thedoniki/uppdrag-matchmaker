@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Assignment data lives in Lovable Cloud: `assignments` is public (read/insert), `assignment_contacts` and `interest_registrations` are insert-only for the site so personal data never reaches the browser; `interest_count` is bumped by a SECURITY DEFINER trigger.
+- Keep public interest submissions insert-only and enforce the shared interest form's name, email and motivation validation in the database INSERT policy, so direct requests cannot bypass form validation.
 - Shared header/footer live in `src/routes/__root.tsx`; Swedish URL slugs (/uppdrag, /lamna-uppdrag, /integritet).
 - Use the shared submission schema for conditional form validation and the Shadcn calendar for date selection, so disabled dates match validation bounds.
 - Keep the selected organisation type in its constrained column and custom descriptions in the nullable organisation_type_other column, preserving compatibility with existing assignments.
