@@ -12,4 +12,4 @@
 - [x] Ny sektion "Samarbete" på startsidan mellan "Så fungerar det" och footern (foto ur uppladdad mockup)
 - [x] Menyordning: Hem/Om projektet/Samarbetspartners före Uppdragsbanken-rullgardinen
 - [x] Knapparna i "Vill du veta mer?" matchar resterande startsidan (samma hörn, färg, storlek)
-- [ ] Admin-inloggning för frank@konnektofsweden.se (e-post/lösenord + adminroll)
+- [x] Admin-inloggning för frank@konnektofsweden.se (e-post/lösenord + adminroll)
