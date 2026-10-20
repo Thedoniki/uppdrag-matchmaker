@@ -1,4 +1,5 @@
 # Roadmap
+- [ ] AI-granskning i adminvyn: saknade uppgifter, förhandsgranskning och uttryckligt godkännande före ändring.
 
 - [x] Header: loggor + Uppdragsbanken-rullgardin
 - [x] Sortering på /uppdrag
