@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IntegritetRouteImport } from './routes/integritet'
 import { Route as LamnaUppdragRouteImport } from './routes/lamna-uppdrag'
 import { Route as UppdragIndexRouteImport } from './routes/uppdrag.index'
@@ -18,6 +19,11 @@ import { Route as UppdragIdRouteImport } from './routes/uppdrag.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IntegritetRoute = IntegritetRouteImport.update({
@@ -43,6 +49,7 @@ const UppdragIdRoute = UppdragIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/integritet': typeof IntegritetRoute
   '/lamna-uppdrag': typeof LamnaUppdragRoute
   '/uppdrag/$id': typeof UppdragIdRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/integritet': typeof IntegritetRoute
   '/lamna-uppdrag': typeof LamnaUppdragRoute
   '/uppdrag/$id': typeof UppdragIdRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/integritet': typeof IntegritetRoute
   '/lamna-uppdrag': typeof LamnaUppdragRoute
   '/uppdrag/$id': typeof UppdragIdRoute
@@ -66,12 +75,24 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/integritet' | '/lamna-uppdrag' | '/uppdrag/$id' | '/uppdrag/'
+    | '/'
+    | '/auth'
+    | '/integritet'
+    | '/lamna-uppdrag'
+    | '/uppdrag/$id'
+    | '/uppdrag/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/integritet' | '/lamna-uppdrag' | '/uppdrag/$id' | '/uppdrag'
+  to:
+    | '/'
+    | '/auth'
+    | '/integritet'
+    | '/lamna-uppdrag'
+    | '/uppdrag/$id'
+    | '/uppdrag'
   id:
     | '__root__'
     | '/'
+    | '/auth'
     | '/integritet'
     | '/lamna-uppdrag'
     | '/uppdrag/$id'
@@ -80,6 +101,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
   IntegritetRoute: typeof IntegritetRoute
   LamnaUppdragRoute: typeof LamnaUppdragRoute
   UppdragIdRoute: typeof UppdragIdRoute
@@ -93,6 +115,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/integritet': {
@@ -128,6 +157,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
   IntegritetRoute: IntegritetRoute,
   LamnaUppdragRoute: LamnaUppdragRoute,
   UppdragIdRoute: UppdragIdRoute,
