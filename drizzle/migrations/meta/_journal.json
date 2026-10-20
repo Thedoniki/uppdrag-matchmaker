@@ -15,6 +15,13 @@
       "when": 1792494058263,
       "tag": "0001_add_other_organisation_description",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792495030784,
+      "tag": "0002_admin_assignment_actions",
+      "breakpoints": true
     }
   ]
 }
