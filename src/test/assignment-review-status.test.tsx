@@ -44,9 +44,16 @@ const assignment: Assignment = {
   created_at: "2026-10-01T08:00:00+00:00",
 };
 
-function renderWithClient(ui: React.ReactNode) {
+// A card shows the status badge and the review actions side by side, so the test renders them the
+// same way and uses the badge as the point where the loaded review state becomes visible.
+function renderCard() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return render(<QueryClientProvider client={client}>{ui}</QueryClientProvider>);
+  return render(
+    <QueryClientProvider client={client}>
+      <AssignmentReviewStatus id="a1" />
+      <AssignmentReviewPanel assignment={assignment} />
+    </QueryClientProvider>,
+  );
 }
 
 afterEach(() => {
@@ -60,7 +67,7 @@ describe("Granskningsstatus på uppdragskort", () => {
   it("visar Väntar på granskning för ett uppdrag som ännu inte har granskats", async () => {
     vi.mocked(useAppAuth).mockReturnValue(admin);
 
-    renderWithClient(<AssignmentReviewStatus id="a1" />);
+    renderCard();
 
     expect(await screen.findByText("Väntar på granskning")).toBeInTheDocument();
     expect(screen.queryByText(/Granskad/)).toBeNull();
@@ -70,16 +77,15 @@ describe("Granskningsstatus på uppdragskort", () => {
     vi.mocked(useAppAuth).mockReturnValue(admin);
     states = [{ id: "a1", reviewed_at: REVIEWED }];
 
-    renderWithClient(<AssignmentReviewStatus id="a1" />);
+    renderCard();
 
-    const badge = await screen.findByText(/Granskad/);
-    expect(badge).toHaveTextContent("20 oktober 2026");
+    expect(await screen.findByText(/Granskad/)).toHaveTextContent("20 oktober 2026");
   });
 
   it("visar ingen granskningsstatus för besökare utan administratörsbehörighet", () => {
     vi.mocked(useAppAuth).mockReturnValue(visitor);
 
-    const { container } = renderWithClient(<AssignmentReviewStatus id="a1" />);
+    const { container } = renderWithVisitor();
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -89,9 +95,10 @@ describe("Markera som granskad", () => {
   it("kräver administratörens uttryckliga bekräftelse innan uppdraget markeras som granskat", async () => {
     vi.mocked(useAppAuth).mockReturnValue(admin);
 
-    renderWithClient(<AssignmentReviewPanel assignment={assignment} />);
+    renderCard();
+    await screen.findByText("Väntar på granskning");
 
-    fireEvent.click(await screen.findByRole("button", { name: "Markera som granskad" }));
+    fireEvent.click(screen.getByRole("button", { name: "Markera som granskad" }));
 
     await waitFor(() => expect(markCalls).toEqual([{ id: "a1", confirmed: true }]));
   });
@@ -100,17 +107,28 @@ describe("Markera som granskad", () => {
     vi.mocked(useAppAuth).mockReturnValue(admin);
     states = [{ id: "a1", reviewed_at: REVIEWED }];
 
-    renderWithClient(<AssignmentReviewPanel assignment={assignment} />);
+    renderCard();
+    await screen.findByText(/Granskad/);
 
-    await screen.findByRole("button", { name: "Granska med AI" });
     expect(screen.queryByRole("button", { name: "Markera som granskad" })).toBeNull();
+    expect(screen.getByRole("button", { name: "Granska med AI" })).toBeInTheDocument();
   });
 
   it("visar ingen granskningsåtgärd för besökare utan administratörsbehörighet", () => {
     vi.mocked(useAppAuth).mockReturnValue(visitor);
 
-    const { container } = renderWithClient(<AssignmentReviewPanel assignment={assignment} />);
+    const { container } = renderWithVisitor();
 
     expect(container).toBeEmptyDOMElement();
   });
 });
+
+function renderWithVisitor() {
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return render(
+    <QueryClientProvider client={client}>
+      <AssignmentReviewStatus id="a1" />
+      <AssignmentReviewPanel assignment={assignment} />
+    </QueryClientProvider>,
+  );
+}
