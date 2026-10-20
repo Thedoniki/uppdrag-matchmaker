@@ -107,7 +107,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
             <ul className="grid gap-3 md:grid-cols-2">
               {result.missing.map((item, index) => <li key={index} className="flex flex-col rounded-xl border border-border bg-card p-4 shadow-soft">
                 <h4 className="text-lg font-bold">{item.label}</h4>
-                <p className="mt-1.5 min-h-14 text-base leading-relaxed text-foreground/85">{item.reason}</p>
+                <p className="mt-1.5 text-base leading-relaxed text-foreground/85">{item.reason}</p>
                 <p className="mt-3 rounded-lg bg-muted/70 px-3 py-2 text-base font-semibold text-foreground">{item.question}</p>
               </li>)}
             </ul>
@@ -116,7 +116,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
           <section className="grid items-stretch gap-5 lg:grid-cols-2">
             <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Nuvarande beskrivning</h3>
-              <p className="min-h-44 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
+              <p className="min-h-28 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground/85">{original}</p>
             </div>
             <div className="flex flex-col">
               <div className="mb-2 flex items-baseline justify-between gap-3">
@@ -129,7 +129,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
                 onChange={event => { setDraft(event.target.value); setSaved(false); }}
                 maxLength={600}
                 rows={8}
-                className="min-h-44 w-full flex-1 resize-none rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+                className="min-h-28 w-full flex-1 resize-none rounded-xl border-2 border-input bg-card p-4 text-base leading-relaxed text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
               />
             </div>
           </section>
@@ -146,11 +146,11 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
           <div className="grid items-stretch gap-5 lg:grid-cols-2">
             <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Före</h3>
-              <p className="min-h-32 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
+              <p className="min-h-28 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground/85">{original}</p>
             </div>
             <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Efter</h3>
-              <p className="min-h-32 flex-1 whitespace-pre-wrap break-words rounded-xl border border-primary/30 bg-secondary p-4">{draft.trim()}</p>
+              <p className="min-h-28 flex-1 whitespace-pre-wrap break-words rounded-xl border border-primary/30 bg-secondary p-4 text-base leading-relaxed">{draft.trim()}</p>
             </div>
           </div>
           <DialogFooter className="gap-3 border-t border-border pt-5 sm:space-x-0">
