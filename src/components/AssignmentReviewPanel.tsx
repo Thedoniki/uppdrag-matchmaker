@@ -83,7 +83,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
     </div>
     {saved && <p role="status" className="mt-4 rounded-lg bg-secondary px-4 py-3 font-semibold text-secondary-foreground">Den bekräftade beskrivningen är sparad.</p>}
     <Dialog open={opened} onOpenChange={open => { if (!saving) { setOpened(open); if (!open) setConfirming(false); } }}>
-      <DialogContent className="max-h-[90dvh] w-[calc(100%-1.5rem)] max-w-6xl gap-5 overflow-y-auto rounded-xl p-5 sm:p-7">
+      <DialogContent className="max-h-[90dvh] w-[calc(100%-1rem)] max-w-6xl gap-3 overflow-y-auto rounded-xl p-4 sm:gap-5 sm:p-7">
         <DialogHeader className="text-left">
           <DialogTitle className="text-2xl leading-snug">{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
           <DialogDescription className="text-base">{assignment.title}</DialogDescription>
@@ -94,8 +94,8 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
         </p>}
         {error && <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
 
-        {!confirming && result && <div className="space-y-4">
-          <section className="rounded-xl border border-primary/20 bg-secondary p-5">
+        {!confirming && result && <div className="space-y-3 sm:space-y-4">
+          <section className="rounded-xl border border-primary/20 bg-secondary p-4 sm:p-5">
             <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-secondary-foreground">
               <Sparkles className="size-4" aria-hidden="true" />Sammanfattning
             </h3>
@@ -113,7 +113,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
             </ul>
           </section> : <p className="rounded-xl border border-border bg-card p-4 text-base text-foreground/85">Inga tydligt saknade uppgifter hittades.</p>}
 
-          <section className="grid items-stretch gap-5 lg:grid-cols-2">
+          <section className="grid items-stretch gap-3 lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Nuvarande beskrivning</h3>
               <p className="min-h-28 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground/85">{original}</p>
@@ -134,7 +134,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
             </div>
           </section>
 
-          <DialogFooter className="gap-3 border-t border-border pt-5 sm:space-x-0">
+          <DialogFooter className={FOOTER}>
             <Button variant="outline" className="min-h-11" onClick={() => { setResult(null); setDraft(original); setError(""); setOpened(false); }}>Avvisa förslag</Button>
             {!statesLoading && !reviewedAt && <Button variant="outline" className="min-h-11" onClick={finish} disabled={disabled}><Check />Markera som granskad</Button>}
             <Button className="min-h-11" onClick={preview} disabled={draft.trim() === original.trim()}><ClipboardCheck />Förhandsgranska ändring</Button>
@@ -143,7 +143,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
 
         {confirming && <>
           <p className="rounded-xl border border-border bg-muted/70 p-4 text-base text-foreground/85">Endast beskrivningen ändras. Uppdraget markeras som granskat när du bekräftar.</p>
-          <div className="grid items-stretch gap-5 lg:grid-cols-2">
+          <div className="grid items-stretch gap-3 lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Före</h3>
               <p className="min-h-28 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base leading-relaxed text-foreground/85">{original}</p>
@@ -153,7 +153,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
               <p className="min-h-28 flex-1 whitespace-pre-wrap break-words rounded-xl border border-primary/30 bg-secondary p-4 text-base leading-relaxed">{draft.trim()}</p>
             </div>
           </div>
-          <DialogFooter className="gap-3 border-t border-border pt-5 sm:space-x-0">
+          <DialogFooter className={FOOTER}>
             <Button variant="outline" className="min-h-11" disabled={saving} onClick={() => setConfirming(false)}>Avbryt</Button>
             <Button className="min-h-11" disabled={saving} onClick={confirm}>{saving && <LoaderCircle className="animate-spin motion-reduce:animate-none" />}{saving ? "Sparar…" : "Bekräfta och spara"}</Button>
           </DialogFooter>
