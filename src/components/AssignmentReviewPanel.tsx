@@ -94,7 +94,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
         </p>}
         {error && <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
 
-        {!confirming && result && <div className="space-y-5">
+        {!confirming && result && <div className="space-y-4">
           <section className="rounded-xl border border-primary/20 bg-secondary p-5">
             <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-secondary-foreground">
               <Sparkles className="size-4" aria-hidden="true" />Sammanfattning
