@@ -1,0 +1,7 @@
+[
+{"capability":"code","source":"TanStack Start app (5 pages)","outcome":"migrate","status":"done","next_action":"none"},
+{"capability":"schema","source":"drizzle/migrations (3 tables + trigger)","outcome":"migrate","status":"in_progress","next_action":"apply in Lovable Cloud"},
+{"capability":"records","source":"previous database","outcome":"migrate","status":"pending","next_action":"user exports CSV of assignments, assignment_contacts, interest_registrations"},
+{"capability":"auth","source":"none (public forms only)","outcome":"not_applicable","status":"verified","next_action":"none"},
+{"capability":"storage/schedules/webhooks/secrets","source":"none detected","outcome":"not_applicable","status":"verified","next_action":"none"}
+]
