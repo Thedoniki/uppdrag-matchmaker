@@ -39,7 +39,7 @@ export function SiteHeader() {
       ))}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className={`${linkBase} w-full justify-between lg:w-auto lg:justify-center`}>
+          <Button variant="ghost" className={`${linkBase} w-full justify-between lg:w-56 lg:justify-center`}>
             Uppdragsbanken <ChevronDown aria-hidden="true" />
           </Button>
         </DropdownMenuTrigger>
@@ -66,7 +66,7 @@ export function SiteHeader() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link to="/" aria-label="Tech Trainee Talent – till startsidan" className="flex min-w-0 items-center gap-2 sm:gap-3">
           <img src={tttSymbol.url} alt="Tech Talent symbol" className="h-11 w-11 shrink-0 object-contain sm:h-12 sm:w-12" />
-          <img src={tttWordmark.url} alt="Tech Trainee Talent" className="h-11 w-48 max-w-full min-w-0 object-contain sm:h-12 sm:w-72 lg:w-80" />
+          <img src={tttWordmark.url} alt="Tech Trainee Talent" className="h-11 w-48 max-w-full min-w-0 object-contain sm:h-12 sm:w-72 lg:w-64 xl:w-80" />
         </Link>
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Huvudmeny">{links}</nav>
         <Button variant="ghost" size="icon"
