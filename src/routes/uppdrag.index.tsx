@@ -23,6 +23,7 @@ function ListPage() {
   const { data } = useSuspenseQuery(assignmentsQuery());
   const [sortBy, setSortBy] = useState<SortBy>("nyast");
   const items = useMemo(() => sortAssignments(data, sortBy), [data, sortBy]);
+  console.log("DBG render sortBy=", sortBy, "first=", items[0]?.title);
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-16">
@@ -55,7 +56,7 @@ function ListPage() {
           </Link>
         </div>
       ) : (
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div data-sort={sortBy} className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {items.map((a, i) => (
             <Reveal key={a.id} delay={Math.min(i, 6) * 0.06} className="h-full">
               <AssignmentCard a={a} />
