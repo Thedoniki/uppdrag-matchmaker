@@ -1,12 +1,10 @@
-# Uppgifter
-- [x] Ändra etiketten på uppdragssidan till Uppdrag utan att ändra kategorierna.
-- [x] Uppdatera kontaktinformationen och Kontakta oss till info@techtraineetalent.se och Helsingborg, Sverige.
-- [x] Ersätt Anmäl intresse med Ta bort och Arkivera endast för administratörer.
-- [x] Tilldela första administratören och testa arkivering, återställning och radering inloggat.
-- [x] Ersätt sidhuvudets loggor med uppladdad symbol och ordmärke till höger.
-- [x] Samla uppdragslänkar och Kontakta oss under Uppdragsbanken.
-- [x] Kontrollera meny, länkar och loggor.
-- [x] Visa e-postfel med @ vid inskickning.
-- [x] Spärra dagens datum i kalendern utan att ändra befintligt datumintervall.
-- [x] Visa och spara obligatorisk organisationstext för Annat.
-- [x] Kontrollera tester och formuläret.
+# Roadmap
+
+- [x] Header: loggor + Uppdragsbanken-rullgardin
+- [x] Sortering på /uppdrag
+- [x] Formulärkrav: @ i e-postfel, inget dagens datum, Annat → fritext
+- [x] Admin: Ta bort / Arkivera / Återställ
+- [x] Kontaktinfo: info@techtraineetalent.se, Helsingborg, Sverige
+- [x] Tack-skärm: "Se uppdraget i listan" endast för administratörer, annars "Lämna ett nytt uppdrag"
+- [x] Fixa utseendet på uppdragssidan (/uppdrag/$id) enligt UX – hel kortlayout markerad av användaren
+- [x] Admin ser inte Ta bort/Arkivera: behörigheten uppdateras nu automatiskt vid fokus/ny flik (AuthProvider); testad med admin-session
