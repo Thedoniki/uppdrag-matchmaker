@@ -22,8 +22,6 @@ export function submitSchema(today = new Date()) {
   const { min, max } = dateBounds(today);
   return z.object({
     organisation_name: z.string().trim().min(2, "Ange organisationens namn, 2 till 80 tecken.").max(80, "Ange organisationens namn, 2 till 80 tecken."),
-    organisation_type: z.enum(ORGANISATION_TYPES, { errorMap: () => ({ message: "Välj vilken typ av organisation ni är." }) }),
-    organisation_type_other: z.string().trim().max(120, "Ange högst 120 tecken.").optional(),
     title: z.string().trim().min(5, "Ange en titel på 5 till 80 tecken.").max(80, "Ange en titel på 5 till 80 tecken."),
     need: z.string().trim().min(30, "Beskriv ert behov med minst 30 tecken.").max(600, "Beskrivningen får vara högst 600 tecken."),
     category: z.enum(CATEGORIES, { errorMap: () => ({ message: "Välj en kategori." }) }),
@@ -35,11 +33,14 @@ export function submitSchema(today = new Date()) {
     phone: z.string().refine(isValidPhone, "Ange ett telefonnummer med 7 till 15 siffror eller lämna fältet tomt."),
     consent: z.literal(true, { errorMap: () => ({ message: "Du behöver kryssa i rutan för att fortsätta." }) }),
     website: z.string().optional(),
+  }).and(z.object({
+    organisation_type: z.enum(ORGANISATION_TYPES, { errorMap: () => ({ message: "Välj vilken typ av organisation ni är." }) }),
+    organisation_type_other: z.string().trim().max(120, "Ange högst 120 tecken.").optional(),
   }).superRefine((values, ctx) => {
     if (values.organisation_type === "Annat" && !values.organisation_type_other?.trim()) {
       ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["organisation_type_other"], message: "Beskriv vilken typ av organisation ni är." });
     }
-  });
+  }));
 }
 
 export const interestSchema = z.object({
