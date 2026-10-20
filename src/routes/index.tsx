@@ -22,7 +22,6 @@ const steps = [
 ];
 
 function Index() {
-  const { data } = useSuspenseQuery(assignmentsQuery(6));
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 py-20 md:py-28">
