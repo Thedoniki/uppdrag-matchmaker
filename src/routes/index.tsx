@@ -12,7 +12,6 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Lämna små digitala uppdrag till deltagare i Tech Talent i Helsingborg." },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(assignmentsQuery(6)),
   component: Index,
 });
 
