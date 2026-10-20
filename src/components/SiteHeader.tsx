@@ -12,6 +12,12 @@ import tttWordmark from "@/assets/tech-talent-official-wordmark.svg.asset.json";
 
 const linkBase = "whitespace-nowrap rounded-lg px-3 py-2 font-semibold text-foreground transition-colors hover:text-primary";
 
+const siteLinks = [
+  { label: "Hem", href: "https://techtraineetalent.se/" },
+  { label: "Om projektet", href: "https://techtraineetalent.se/om-projektet" },
+  { label: "Samarbetspartners", href: "https://techtraineetalent.se/samarbetspartners" },
+];
+
 export function SiteHeader() {
   const { user } = useAppAuth();
   const qc = useQueryClient();
@@ -47,9 +53,11 @@ export function SiteHeader() {
           {user ? <DropdownMenuItem className="px-3 py-3 text-base" onSelect={() => { void signOut(); }}>Logga ut</DropdownMenuItem> : <DropdownMenuItem asChild className="px-3 py-3 text-base"><Link to="/auth" onClick={close}>Administratörsinloggning</Link></DropdownMenuItem>}
         </DropdownMenuContent>
       </DropdownMenu>
-      <a href="https://techtraineetalent.se" target="_blank" rel="noreferrer" className={linkBase}>
-        Om Tech Talent
-      </a>
+      {siteLinks.map((l) => (
+        <a key={l.href} href={l.href} target="_blank" rel="noreferrer" className={linkBase} onClick={close}>
+          {l.label}
+        </a>
+      ))}
     </>
   );
 
