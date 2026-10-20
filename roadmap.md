@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Flytta AI-granskning till varje uppdragskort och verifiera dialogen utan krasch.
+- [x] Flytta AI-granskning till varje uppdragskort och verifiera dialogen utan krasch.
 - [x] AI-granskning i adminvyn: saknade uppgifter, förhandsgranskning och uttryckligt godkännande före ändring.
 - [x] Meny: proportionerliga meny-/stängikoner och linjerade loggor, länkar och rullgardinsmeny.
 
