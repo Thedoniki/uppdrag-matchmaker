@@ -64,16 +64,6 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <Reveal>
-          <h2 className="text-4xl md:text-5xl">Aktuella uppdrag</h2>
-        </Reveal>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {data.map((a, i) => (
-            <Reveal key={a.id} delay={i * 0.06} className="h-full">
-              <AssignmentCard a={a} />
-            </Reveal>
-          ))}
     </>
   );
 }
