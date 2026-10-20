@@ -17,4 +17,4 @@
 - [x] Uppdatera sårbara underpaket för @tailwindcss/vite och @tanstack/react-start; låsfilen innehåller source-map-js 1.2.2 och js-yaml 4.3.2, skanningen hittar inga kända produktionssårbarheter, 25 tester godkända och build OK.
 - [x] Kort på /uppdrag: tydligare avgränsning (grön topplist, tjockare kant, skugga)
 - [x] Arkiv: tydligt felmeddelande med Försök igen-knapp när arkiverade uppdrag inte kan hämtas
-- [ ] Byt admin-mejl: frank@konnektofsweden.se -> techtalentuppdrag@admin.se
+- [x] Byt admin-mejl till techtalentuppdrag@admin.se (samma lösenord), verifierat
