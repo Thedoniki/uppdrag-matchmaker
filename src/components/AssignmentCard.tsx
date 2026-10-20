@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { excerpt, formatDate, type Assignment } from "@/lib/assignments";
+import { AssignmentReviewPanel } from "./AssignmentReviewPanel";
 
 export function CategoryTag({ children }: { children: string }) {
   return (
@@ -31,6 +32,7 @@ export function AssignmentCard({ a }: { a: Assignment }) {
         >
           Läs mer <span className="transition-transform group-hover:translate-x-[3px] motion-reduce:transition-none">→</span>
         </Link>
+        <AssignmentReviewPanel assignment={a} />
       </div>
     </article>
   );

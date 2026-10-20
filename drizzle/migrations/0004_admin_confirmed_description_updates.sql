@@ -1,0 +1,1 @@
+GRANT UPDATE (need) ON public.assignments TO authenticated;
