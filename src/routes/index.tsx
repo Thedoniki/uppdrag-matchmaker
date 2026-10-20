@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import { arrow, btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
+import { useAppAuth } from "@/components/AuthProvider";
 import samarbetePhoto from "@/assets/samarbete-photo.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
