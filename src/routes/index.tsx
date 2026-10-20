@@ -29,7 +29,7 @@ function Index() {
       <section className="mx-auto max-w-6xl px-4 py-20 md:py-28">
         <Reveal>
           <p className={eyebrow}>Ett initiativ av Tech Talent</p>
-          <h1 className="mt-3 text-5xl md:text-7xl">Uppdragsbanken</h1>
+          <h1 className="mt-3 text-4xl sm:text-5xl md:text-7xl">Uppdragsbanken</h1>
           <p className="mt-6 max-w-2xl text-xl text-muted-foreground md:text-2xl">
             Här kan företag och föreningar lämna små digitala uppdrag till Tech Talent. Våra deltagare får möjlighet att
             arbeta med uppdragen med stöd och handledning.
