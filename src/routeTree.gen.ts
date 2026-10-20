@@ -10,33 +10,80 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as IntegritetRouteImport } from './routes/integritet'
+import { Route as LamnaUppdragRouteImport } from './routes/lamna-uppdrag'
+import { Route as UppdragIndexRouteImport } from './routes/uppdrag.index'
+import { Route as UppdragIdRouteImport } from './routes/uppdrag.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const IntegritetRoute = IntegritetRouteImport.update({
+  id: '/integritet',
+  path: '/integritet',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LamnaUppdragRoute = LamnaUppdragRouteImport.update({
+  id: '/lamna-uppdrag',
+  path: '/lamna-uppdrag',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UppdragIndexRoute = UppdragIndexRouteImport.update({
+  id: '/uppdrag/',
+  path: '/uppdrag/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UppdragIdRoute = UppdragIdRouteImport.update({
+  id: '/uppdrag/$id',
+  path: '/uppdrag/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/integritet': typeof IntegritetRoute
+  '/lamna-uppdrag': typeof LamnaUppdragRoute
+  '/uppdrag/$id': typeof UppdragIdRoute
+  '/uppdrag/': typeof UppdragIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/integritet': typeof IntegritetRoute
+  '/lamna-uppdrag': typeof LamnaUppdragRoute
+  '/uppdrag/$id': typeof UppdragIdRoute
+  '/uppdrag': typeof UppdragIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/integritet': typeof IntegritetRoute
+  '/lamna-uppdrag': typeof LamnaUppdragRoute
+  '/uppdrag/$id': typeof UppdragIdRoute
+  '/uppdrag/': typeof UppdragIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    '/' | '/integritet' | '/lamna-uppdrag' | '/uppdrag/$id' | '/uppdrag/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/integritet' | '/lamna-uppdrag' | '/uppdrag/$id' | '/uppdrag'
+  id:
+    | '__root__'
+    | '/'
+    | '/integritet'
+    | '/lamna-uppdrag'
+    | '/uppdrag/$id'
+    | '/uppdrag/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  IntegritetRoute: typeof IntegritetRoute
+  LamnaUppdragRoute: typeof LamnaUppdragRoute
+  UppdragIdRoute: typeof UppdragIdRoute
+  UppdragIndexRoute: typeof UppdragIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +95,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/integritet': {
+      id: '/integritet'
+      path: '/integritet'
+      fullPath: '/integritet'
+      preLoaderRoute: typeof IntegritetRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lamna-uppdrag': {
+      id: '/lamna-uppdrag'
+      path: '/lamna-uppdrag'
+      fullPath: '/lamna-uppdrag'
+      preLoaderRoute: typeof LamnaUppdragRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/uppdrag/': {
+      id: '/uppdrag/'
+      path: '/uppdrag'
+      fullPath: '/uppdrag/'
+      preLoaderRoute: typeof UppdragIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/uppdrag/$id': {
+      id: '/uppdrag/$id'
+      path: '/uppdrag/$id'
+      fullPath: '/uppdrag/$id'
+      preLoaderRoute: typeof UppdragIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  IntegritetRoute: IntegritetRoute,
+  LamnaUppdragRoute: LamnaUppdragRoute,
+  UppdragIdRoute: UppdragIdRoute,
+  UppdragIndexRoute: UppdragIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
