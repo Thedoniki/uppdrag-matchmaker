@@ -8,11 +8,15 @@ import { useAppAuth } from "@/components/AuthProvider";
 vi.mock("@/components/AuthProvider", () => ({ useAppAuth: vi.fn() }));
 
 let fetchArchive: (args: { data: object }) => Promise<unknown> = async () => [];
-vi.mock("@tanstack/react-start", () => ({
-  // The component resolves its server function through useServerFn; in tests we
-  // swap in a controllable fetcher instead of talking to the server.
-  useServerFn: () => fetchArchive,
-}));
+vi.mock("@tanstack/react-start", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@tanstack/react-start")>();
+  return {
+    ...actual,
+    // The component resolves its server function through useServerFn; in tests we
+    // swap in a controllable fetcher instead of talking to the server.
+    useServerFn: () => fetchArchive,
+  };
+});
 
 function renderArchive() {
   const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
