@@ -17,10 +17,16 @@ export function useReviewStates() {
   });
 }
 
-export function useReviewedAt(id: string) {
-  const { data } = useReviewStates();
-  return data?.find(state => state.id === id)?.reviewed_at ?? null;
+export function useReviewState(id: string) {
+  const states = useReviewStates();
+  return {
+    reviewedAt: states.data?.find(state => state.id === id)?.reviewed_at ?? null,
+    // While an admin's states are still loading the review actions stay hidden, so a card never
+    // offers "mark as reviewed" for an assignment that turns out to be reviewed already.
+    loading: states.isPending && !states.isDisabled,
+  };
 }
+
 
 export function AssignmentReviewStatus({ id }: { id: string }) {
   const { isAdmin } = useAppAuth();

@@ -7,7 +7,7 @@ import { Button } from "./ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "./ui/dialog";
 import { reviewAssignment, confirmAssignmentReview, markAssignmentReviewed } from "@/lib/assignment-review.functions";
 import { confirmReviewSchema, type AssignmentReview } from "@/lib/assignment-review";
-import { useReviewedAt } from "./AssignmentReviewStatus";
+import { useReviewState } from "./AssignmentReviewStatus";
 import type { Assignment } from "@/lib/assignments";
 
 function ReviewItem({ assignment }: { assignment: Assignment }) {
@@ -15,7 +15,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
   const save = useServerFn(confirmAssignmentReview);
   const mark = useServerFn(markAssignmentReviewed);
   const queryClient = useQueryClient();
-  const reviewedAt = useReviewedAt(assignment.id);
+  const { reviewedAt, loading: statesLoading } = useReviewState(assignment.id);
   const [result, setResult] = useState<AssignmentReview | null>(null);
   const [original, setOriginal] = useState(assignment.need);
   const [draft, setDraft] = useState(assignment.need);
