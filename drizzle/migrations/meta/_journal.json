@@ -29,6 +29,13 @@
       "when": 1792497234475,
       "tag": "0003_validate_interest_registration_policy",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1792498187617,
+      "tag": "0004_admin_confirmed_description_updates",
+      "breakpoints": true
     }
   ]
 }
