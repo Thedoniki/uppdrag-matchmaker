@@ -1,4 +1,5 @@
 # Uppgifter
+- [ ] Uppdatera kontaktinformationen och Kontakta oss till info@techtraineetalent.se och Helsingborg, Sverige.
 - [ ] Ersätt Anmäl intresse med Ta bort och Arkivera efter beslut om vem som får hantera uppdrag.
 - [x] Ersätt sidhuvudets loggor med uppladdad symbol och ordmärke till höger.
 - [x] Samla uppdragslänkar och Kontakta oss under Uppdragsbanken.
