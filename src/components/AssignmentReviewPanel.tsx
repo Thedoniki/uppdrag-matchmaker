@@ -83,7 +83,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
     </div>
     {saved && <p role="status" className="mt-4 rounded-lg bg-secondary px-4 py-3 font-semibold text-secondary-foreground">Den bekräftade beskrivningen är sparad.</p>}
     <Dialog open={opened} onOpenChange={open => { if (!saving) { setOpened(open); if (!open) setConfirming(false); } }}>
-      <DialogContent className="max-h-[90dvh] w-[calc(100%-1.5rem)] max-w-5xl gap-5 overflow-y-auto rounded-xl p-5 sm:p-7">
+      <DialogContent className="max-h-[90dvh] w-[calc(100%-1.5rem)] max-w-6xl gap-5 overflow-y-auto rounded-xl p-5 sm:p-7">
         <DialogHeader className="gap-1.5">
           <DialogTitle className="text-2xl leading-snug">{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
           <DialogDescription className="text-base">{assignment.title}</DialogDescription>
