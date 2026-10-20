@@ -1,4 +1,5 @@
 # Uppgifter
+- [ ] Ersätt Anmäl intresse med Ta bort och Arkivera efter beslut om vem som får hantera uppdrag.
 - [ ] Ersätt sidhuvudets loggor med uppladdad symbol och ordmärke till höger.
 - [ ] Samla uppdragslänkar och Kontakta oss under Uppdragsbanken.
 - [ ] Kontrollera meny, länkar och loggor.
