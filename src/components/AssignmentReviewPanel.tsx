@@ -126,7 +126,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
                 onChange={event => { setDraft(event.target.value); setSaved(false); }}
                 maxLength={600}
                 rows={8}
-                className="min-h-44 w-full rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+                className="min-h-44 w-full resize-none rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
               />
               <p className="mt-2 text-right text-sm text-muted-foreground">{draft.length}/600 tecken</p>
             </div>
