@@ -17,8 +17,8 @@ const markCalls: { id: string; confirmed: boolean }[] = [];
 // fetcher answers both: the states query sends an empty payload, the mark action sends a confirmed flag.
 const fetchServerFn = async ({ data }: { data: Record<string, unknown> }) => {
   if ("confirmed" in data) {
-    markCalls.push(data as unknown as { id: string; confirmed: boolean });
-    return { id: data.id };
+    markCalls.push({ id: String(data["id"]), confirmed: true });
+    return { id: data["id"] };
   }
   return states;
 };

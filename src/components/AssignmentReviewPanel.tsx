@@ -4,11 +4,14 @@ import { useQueryClient } from "@tanstack/react-query";
 import { Check, ClipboardCheck, LoaderCircle, Sparkles } from "lucide-react";
 import { useAppAuth } from "./AuthProvider";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogTitle } from "./ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./ui/dialog";
 import { reviewAssignment, confirmAssignmentReview, markAssignmentReviewed } from "@/lib/assignment-review.functions";
 import { confirmReviewSchema, type AssignmentReview } from "@/lib/assignment-review";
 import { useReviewState } from "./AssignmentReviewStatus";
 import type { Assignment } from "@/lib/assignments";
+
+// One label style for every block in the dialog, so the sections read as a list of steps.
+const SECTION_LABEL = "mb-2 text-sm font-bold uppercase tracking-wide text-muted-foreground";
 
 function ReviewItem({ assignment }: { assignment: Assignment }) {
   const review = useServerFn(reviewAssignment);
@@ -78,36 +81,80 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
         {marking ? <LoaderCircle className="animate-spin motion-reduce:animate-none" /> : <Check />} {marking ? "Markerar…" : "Markera som granskad"}
       </Button>}
     </div>
-    {saved && <p role="status" className="mt-4 font-semibold text-primary">Den bekräftade beskrivningen är sparad.</p>}
+    {saved && <p role="status" className="mt-4 rounded-lg bg-secondary px-4 py-3 font-semibold text-secondary-foreground">Den bekräftade beskrivningen är sparad.</p>}
     <Dialog open={opened} onOpenChange={open => { if (!saving) { setOpened(open); if (!open) setConfirming(false); } }}>
-      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-3xl overflow-y-auto rounded-lg">
-        <DialogTitle>{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
-        <DialogDescription>{assignment.title}</DialogDescription>
-        {busy && <p role="status" className="flex items-center gap-2"><LoaderCircle className="size-5 animate-spin" />Granskar…</p>}
-        {error && <p role="alert" className="rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
-        {!confirming && <>
-    {result && <div className="mt-5 border-t border-border pt-5">
-      <p className="font-semibold">{result.summary}</p>
-      {result.missing.length ? <ul className="mt-4 divide-y divide-border">{result.missing.map((item, index) => <li key={index} className="py-3 first:pt-0">
-        <h4 className="font-bold">{item.label}</h4><p className="text-sm text-muted-foreground">{item.reason}</p><p className="mt-1">{item.question}</p>
-      </li>)}</ul> : <p className="mt-3 text-muted-foreground">Inga tydligt saknade uppgifter hittades.</p>}
-      <div className="mt-5 grid gap-5 lg:grid-cols-2">
-        <div><h4 className="mb-2 font-bold">Nuvarande beskrivning</h4><p className="whitespace-pre-wrap break-words text-muted-foreground">{original}</p></div>
-        <div><label htmlFor={`review-${assignment.id}`} className="mb-2 block font-bold">Kompletterad beskrivning</label>
-          <textarea id={`review-${assignment.id}`} value={draft} onChange={event => { setDraft(event.target.value); setSaved(false); }} maxLength={600} rows={7} className="w-full rounded-lg border-2 border-input bg-background p-3 text-foreground focus:outline-none focus:ring-2 focus:ring-ring" />
-          <p className="mt-1 text-right text-sm text-muted-foreground">{draft.length}/600</p>
-        </div>
-      </div>
-      <div className="mt-4 flex flex-wrap justify-end gap-3">
-        <Button variant="outline" className="min-h-11" onClick={() => { setResult(null); setDraft(original); setError(""); setOpened(false); }}>Avvisa förslag</Button>
-        {!statesLoading && !reviewedAt && <Button variant="outline" className="min-h-11" onClick={finish} disabled={disabled}><Check />Markera som granskad</Button>}
-        <Button className="min-h-11" onClick={preview} disabled={draft.trim() === original.trim()}><ClipboardCheck />Förhandsgranska ändring</Button>
-      </div>
-    </div>}
-        </>}
+      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-3xl gap-6 overflow-y-auto rounded-xl p-6 sm:p-8">
+        <DialogHeader className="gap-1.5">
+          <DialogTitle className="text-2xl leading-snug">{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
+          <DialogDescription className="text-base">{assignment.title}</DialogDescription>
+        </DialogHeader>
+
+        {busy && <p role="status" className="flex items-center gap-3 rounded-xl bg-muted p-4 font-semibold">
+          <LoaderCircle className="size-5 animate-spin motion-reduce:animate-none" />AI:n läser beskrivningen…
+        </p>}
+        {error && <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
+
+        {!confirming && result && <div className="space-y-6">
+          <section className="rounded-xl border border-primary/20 bg-secondary p-5">
+            <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-secondary-foreground">
+              <Sparkles className="size-4" aria-hidden="true" />Sammanfattning
+            </h3>
+            <p className="mt-2 text-base font-semibold text-secondary-foreground">{result.summary}</p>
+          </section>
+
+          {result.missing.length ? <section>
+            <h3 className="text-lg font-bold">Saknade uppgifter</h3>
+            <ul className="mt-3 space-y-3">
+              {result.missing.map((item, index) => <li key={index} className="rounded-xl border border-border bg-card p-4 shadow-soft">
+                <h4 className="font-bold">{item.label}</h4>
+                <p className="mt-1 text-sm text-muted-foreground">{item.reason}</p>
+                <p className="mt-3 rounded-lg bg-muted/70 px-3 py-2 font-semibold">{item.question}</p>
+              </li>)}
+            </ul>
+          </section> : <p className="rounded-xl border border-border bg-card p-4 text-muted-foreground">Inga tydligt saknade uppgifter hittades.</p>}
+
+          <section className="grid gap-5 lg:grid-cols-2">
+            <div>
+              <h3 className={SECTION_LABEL}>Nuvarande beskrivning</h3>
+              <p className="min-h-44 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-muted-foreground">{original}</p>
+            </div>
+            <div>
+              <label htmlFor={`review-${assignment.id}`} className={`${SECTION_LABEL} block`}>Kompletterad beskrivning</label>
+              <textarea
+                id={`review-${assignment.id}`}
+                value={draft}
+                onChange={event => { setDraft(event.target.value); setSaved(false); }}
+                maxLength={600}
+                rows={8}
+                className="min-h-44 w-full rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+              />
+              <p className="mt-2 text-right text-sm text-muted-foreground">{draft.length}/600 tecken</p>
+            </div>
+          </section>
+
+          <DialogFooter className="gap-3 border-t border-border pt-5 sm:space-x-0">
+            <Button variant="outline" className="min-h-11" onClick={() => { setResult(null); setDraft(original); setError(""); setOpened(false); }}>Avvisa förslag</Button>
+            {!statesLoading && !reviewedAt && <Button variant="outline" className="min-h-11" onClick={finish} disabled={disabled}><Check />Markera som granskad</Button>}
+            <Button className="min-h-11" onClick={preview} disabled={draft.trim() === original.trim()}><ClipboardCheck />Förhandsgranska ändring</Button>
+          </DialogFooter>
+        </div>}
+
         {confirming && <>
-        <div className="grid gap-5 sm:grid-cols-2"><div><h4 className="mb-2 font-bold">Före</h4><p className="whitespace-pre-wrap break-words text-muted-foreground">{original}</p></div><div><h4 className="mb-2 font-bold">Efter</h4><p className="whitespace-pre-wrap break-words">{draft.trim()}</p></div></div>
-        <DialogFooter className="gap-3"><Button variant="outline" className="min-h-11" disabled={saving} onClick={() => setConfirming(false)}>Avbryt</Button><Button className="min-h-11" disabled={saving} onClick={confirm}>{saving && <LoaderCircle className="animate-spin" />}{saving ? "Sparar…" : "Bekräfta och spara"}</Button></DialogFooter>
+          <p className="rounded-xl border border-border bg-muted/70 p-4 text-sm text-muted-foreground">Endast beskrivningen ändras. Uppdraget markeras som granskat när du bekräftar.</p>
+          <div className="grid gap-5 lg:grid-cols-2">
+            <div>
+              <h3 className={SECTION_LABEL}>Före</h3>
+              <p className="min-h-32 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-muted-foreground">{original}</p>
+            </div>
+            <div>
+              <h3 className={SECTION_LABEL}>Efter</h3>
+              <p className="min-h-32 whitespace-pre-wrap break-words rounded-xl border border-primary/30 bg-secondary p-4">{draft.trim()}</p>
+            </div>
+          </div>
+          <DialogFooter className="gap-3 border-t border-border pt-5 sm:space-x-0">
+            <Button variant="outline" className="min-h-11" disabled={saving} onClick={() => setConfirming(false)}>Avbryt</Button>
+            <Button className="min-h-11" disabled={saving} onClick={confirm}>{saving && <LoaderCircle className="animate-spin motion-reduce:animate-none" />}{saving ? "Sparar…" : "Bekräfta och spara"}</Button>
+          </DialogFooter>
         </>}
       </DialogContent>
     </Dialog>
