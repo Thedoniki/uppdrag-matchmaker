@@ -85,7 +85,7 @@ describe("Granskningsstatus på uppdragskort", () => {
   it("visar ingen granskningsstatus för besökare utan administratörsbehörighet", () => {
     vi.mocked(useAppAuth).mockReturnValue(visitor);
 
-    const { container } = renderWithVisitor();
+    const { container } = renderCard();
 
     expect(container).toBeEmptyDOMElement();
   });
@@ -117,18 +117,8 @@ describe("Markera som granskad", () => {
   it("visar ingen granskningsåtgärd för besökare utan administratörsbehörighet", () => {
     vi.mocked(useAppAuth).mockReturnValue(visitor);
 
-    const { container } = renderWithVisitor();
+    const { container } = renderCard();
 
     expect(container).toBeEmptyDOMElement();
   });
 });
-
-function renderWithVisitor() {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  return render(
-    <QueryClientProvider client={client}>
-      <AssignmentReviewStatus id="a1" />
-      <AssignmentReviewPanel assignment={assignment} />
-    </QueryClientProvider>,
-  );
-}

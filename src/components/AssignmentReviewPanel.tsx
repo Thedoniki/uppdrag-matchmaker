@@ -74,7 +74,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
       <Button onClick={() => { if (result) setOpened(true); else void generate(); }} disabled={disabled} variant="secondary" className="min-h-11 flex-1 basis-44">
         {busy ? <LoaderCircle className="animate-spin motion-reduce:animate-none" /> : <Sparkles />} {busy ? "Granskar…" : result ? "Visa AI-förslag" : "Granska med AI"}
       </Button>
-      {!reviewedAt && <Button onClick={finish} disabled={disabled} variant="outline" className="min-h-11 flex-1 basis-44">
+      {!statesLoading && !reviewedAt && <Button onClick={finish} disabled={disabled} variant="outline" className="min-h-11 flex-1 basis-44">
         {marking ? <LoaderCircle className="animate-spin motion-reduce:animate-none" /> : <Check />} {marking ? "Markerar…" : "Markera som granskad"}
       </Button>}
     </div>
@@ -100,7 +100,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
       </div>
       <div className="mt-4 flex flex-wrap justify-end gap-3">
         <Button variant="outline" className="min-h-11" onClick={() => { setResult(null); setDraft(original); setError(""); setOpened(false); }}>Avvisa förslag</Button>
-        {!reviewedAt && <Button variant="outline" className="min-h-11" onClick={finish} disabled={disabled}><Check />Markera som granskad</Button>}
+        {!statesLoading && !reviewedAt && <Button variant="outline" className="min-h-11" onClick={finish} disabled={disabled}><Check />Markera som granskad</Button>}
         <Button className="min-h-11" onClick={preview} disabled={draft.trim() === original.trim()}><ClipboardCheck />Förhandsgranska ändring</Button>
       </div>
     </div>}
