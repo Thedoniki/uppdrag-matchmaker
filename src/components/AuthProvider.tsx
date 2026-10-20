@@ -28,7 +28,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (event !== "SIGNED_OUT") void qc.invalidateQueries();
       setTimeout(() => { if (active) void refresh(); }, 0);
     });
-    return () => { active = false; subscription.unsubscribe(); };
+    const refetchOnFocus = () => { if (document.visibilityState === "visible") void refresh(); };
+    document.addEventListener("visibilitychange", refetchOnFocus);
+    window.addEventListener("focus", refetchOnFocus);
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+      document.removeEventListener("visibilitychange", refetchOnFocus);
+      window.removeEventListener("focus", refetchOnFocus);
+    };
   }, [qc, router]);
   return <AuthContext.Provider value={state}>{children}</AuthContext.Provider>;
 }
