@@ -64,6 +64,7 @@ export type Database = {
           organisation_type: string
           organisation_type_other: string | null
           preferred_date: string | null
+          reviewed_at: string | null
           status: string
           title: string
         }
@@ -78,6 +79,7 @@ export type Database = {
           organisation_type: string
           organisation_type_other?: string | null
           preferred_date?: string | null
+          reviewed_at?: string | null
           status?: string
           title: string
         }
@@ -92,6 +94,7 @@ export type Database = {
           organisation_type?: string
           organisation_type_other?: string | null
           preferred_date?: string | null
+          reviewed_at?: string | null
           status?: string
           title?: string
         }
