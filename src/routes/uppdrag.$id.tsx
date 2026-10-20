@@ -40,7 +40,7 @@ function DetailPage() {
   if (!a) return null;
 
   return (
-    <section className="mx-auto max-w-3xl px-4 py-12">
+    <section className="mx-auto w-full max-w-full px-3 py-6 sm:max-w-2xl sm:px-6 sm:py-8 lg:max-w-4xl xl:max-w-5xl">
       <Link
         to="/uppdrag"
         className="group inline-flex items-center gap-2 font-bold text-primary hover:text-primary-hover"
@@ -49,46 +49,46 @@ function DetailPage() {
         Tillbaka till alla uppdrag
       </Link>
       <Reveal>
-        <article className="mt-6 overflow-hidden rounded-xl border border-border bg-card shadow-soft">
-          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-border bg-muted/60 px-6 py-4 md:px-10">
-            <div className="flex flex-wrap items-center gap-3">
+        <article className="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-soft">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border bg-muted/60 px-4 py-3 sm:px-6 md:px-8">
+            <div className="flex flex-wrap items-center gap-2">
               <CategoryTag>Uppdrag</CategoryTag>
-              <span className="rounded-full border border-primary px-3 py-1 text-sm font-semibold text-primary">{a.status}</span>
+              <span className="rounded-full border border-primary px-3 py-0.5 text-sm font-semibold text-primary">{a.status}</span>
             </div>
             {a.interest_count > 0 && (
               <span className="text-sm font-semibold text-primary">{interestText(a.interest_count)}</span>
             )}
           </div>
 
-          <div className="px-6 py-8 md:px-10 md:py-10">
-            <h1 className="text-4xl md:text-5xl">{a.title}</h1>
+          <div className="space-y-4 px-4 py-5 sm:px-6 md:px-8 md:py-6">
+            <h1 className="break-words text-3xl md:text-4xl">{a.title}</h1>
 
-            <dl className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="flex items-start gap-3">
-                <Building2 className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" />
-                <div>
-                  <dt className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Organisation</dt>
-                  <dd className="mt-0.5 text-lg">
+            <dl className="grid gap-3 sm:grid-cols-2">
+              <div className="flex items-start gap-3 rounded-lg border border-border bg-muted/40 p-3">
+                <Building2 className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+                <div className="min-w-0">
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Organisation</dt>
+                  <dd className="break-words text-base sm:text-lg">
                     {a.organisation_name} <span className="text-muted-foreground">· {a.organisation_type}</span>
                   </dd>
                 </div>
               </div>
-              <div className="flex items-start gap-3">
-                <Calendar className="mt-1 size-5 shrink-0 text-primary" aria-hidden="true" />
-                <div>
-                  <dt className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">Önskat slutdatum</dt>
-                  <dd className="mt-0.5 text-lg">{formatDate(a.preferred_date)}</dd>
+              <div className="flex items-start gap-3 rounded-lg border border-border bg-muted/40 p-3">
+                <Calendar className="mt-0.5 size-5 shrink-0 text-primary" aria-hidden="true" />
+                <div className="min-w-0">
+                  <dt className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Önskat slutdatum</dt>
+                  <dd className="text-base sm:text-lg">{formatDate(a.preferred_date)}</dd>
                 </div>
               </div>
             </dl>
 
-            <hr className="my-8 border-border" />
+            <div className="rounded-lg border-l-4 border-primary bg-primary/5 p-4">
+              <h2 className="text-xl sm:text-2xl">Om uppdraget</h2>
+              <p className="mt-2 whitespace-pre-line break-words text-base leading-relaxed sm:text-lg">{a.need}</p>
+            </div>
 
-            <h2 className="text-2xl">Om uppdraget</h2>
-            <p className="mt-3 whitespace-pre-line text-lg leading-relaxed">{a.need}</p>
-
-            <p className="mt-8 flex items-start gap-3 rounded-lg border-l-4 border-accent bg-secondary p-4 text-lg text-secondary-foreground">
-              <ShieldCheck className="mt-1 size-5 shrink-0" aria-hidden="true" />
+            <p className="flex items-start gap-3 rounded-lg border-l-4 border-accent bg-secondary p-3 text-base text-secondary-foreground sm:text-lg">
+              <ShieldCheck className="mt-0.5 size-5 shrink-0" aria-hidden="true" />
               <span>Kontaktuppgifter delas först när handledaren har granskat uppdraget.</span>
             </p>
           </div>
