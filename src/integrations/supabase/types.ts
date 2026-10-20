@@ -14,7 +14,118 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      assignment_contacts: {
+        Row: {
+          assignment_id: string
+          consent: boolean
+          contact_person: string
+          created_at: string
+          email: string
+          id: string
+          phone: string | null
+        }
+        Insert: {
+          assignment_id: string
+          consent?: boolean
+          contact_person: string
+          created_at?: string
+          email: string
+          id?: string
+          phone?: string | null
+        }
+        Update: {
+          assignment_id?: string
+          consent?: boolean
+          contact_person?: string
+          created_at?: string
+          email?: string
+          id?: string
+          phone?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignment_contacts_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      assignments: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          interest_count: number
+          need: string
+          organisation_name: string
+          organisation_type: string
+          preferred_date: string | null
+          status: string
+          title: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          interest_count?: number
+          need: string
+          organisation_name: string
+          organisation_type: string
+          preferred_date?: string | null
+          status?: string
+          title: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          interest_count?: number
+          need?: string
+          organisation_name?: string
+          organisation_type?: string
+          preferred_date?: string | null
+          status?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      interest_registrations: {
+        Row: {
+          assignment_id: string
+          created_at: string
+          email: string
+          id: string
+          motivation: string
+          team_name: string
+        }
+        Insert: {
+          assignment_id: string
+          created_at?: string
+          email: string
+          id?: string
+          motivation: string
+          team_name: string
+        }
+        Update: {
+          assignment_id?: string
+          created_at?: string
+          email?: string
+          id?: string
+          motivation?: string
+          team_name?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "interest_registrations_assignment_id_fkey"
+            columns: ["assignment_id"]
+            isOneToOne: false
+            referencedRelation: "assignments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
