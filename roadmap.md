@@ -1,4 +1,5 @@
 # Uppgifter
+- [x] Ändra etiketten på uppdragssidan till Uppdrag utan att ändra kategorierna.
 - [x] Uppdatera kontaktinformationen och Kontakta oss till info@techtraineetalent.se och Helsingborg, Sverige.
 - [x] Ersätt Anmäl intresse med Ta bort och Arkivera endast för administratörer.
 - [ ] Tilldela första administratören och testa arkivering/radering inloggat. Blockerat: inget användarkonto finns; användaren behöver logga in och ange vilket konto som ska vara administratör.

@@ -46,7 +46,7 @@ function DetailPage() {
       <Reveal>
         <div className="mt-6 rounded-xl border border-border bg-card p-6 shadow-soft md:p-10">
           <div className="flex flex-wrap items-center gap-3">
-            <CategoryTag>{a.category}</CategoryTag>
+            <CategoryTag>Uppdrag</CategoryTag>
             <span className="rounded-full border border-primary px-3 py-1 text-sm font-semibold text-primary">{a.status}</span>
           </div>
           <h1 className="mt-4 text-4xl md:text-5xl">{a.title}</h1>
