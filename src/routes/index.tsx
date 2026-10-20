@@ -25,6 +25,8 @@ const steps = [
 ];
 
 function Index() {
+  const { user, loading } = useAppAuth();
+
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 py-20 md:py-28">
