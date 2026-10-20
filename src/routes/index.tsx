@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import { arrow, btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
+import { useAppAuth } from "@/components/AuthProvider";
 import samarbetePhoto from "@/assets/samarbete-photo.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
@@ -24,6 +25,8 @@ const steps = [
 ];
 
 function Index() {
+  const { user, loading } = useAppAuth();
+
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 py-20 md:py-28">
@@ -94,6 +97,31 @@ function Index() {
         </div>
       </section>
 
+      {!loading && !user && (
+        <section className="mx-auto max-w-6xl px-4 py-16 md:py-20">
+          <Reveal>
+            <div className="mx-auto flex max-w-2xl flex-col items-center text-center">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl">Vill du veta mer?</h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Läs mer om projektet bakom Uppdragsbanken eller kontakta oss direkt.
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-4">
+                <a
+                  href="https://techtraineetalent.se/om-projektet"
+                  target="_blank"
+                  rel="noreferrer"
+                  className={btnPrimary}
+                >
+                  Mer om projektet <span className={arrow}>→</span>
+                </a>
+                <a href="mailto:info@techtraineetalent.se" className={btnSecondary}>
+                  Kontakta oss
+                </a>
+              </div>
+            </div>
+          </Reveal>
+        </section>
+      )}
     </>
   );
 }
