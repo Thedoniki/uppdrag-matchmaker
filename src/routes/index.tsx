@@ -8,6 +8,8 @@ export const Route = createFileRoute("/")({
       { title: "Uppdragsbanken Helsingborg" },
       { name: "description", content: "Lämna små digitala uppdrag till deltagare i Tech Talent i Helsingborg." },
       { property: "og:title", content: "Uppdragsbanken Helsingborg" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "Lämna små digitala uppdrag till deltagare i Tech Talent i Helsingborg." },
     ],
   }),

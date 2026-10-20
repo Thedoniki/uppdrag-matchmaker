@@ -8,6 +8,13 @@
       "when": 1792493413332,
       "tag": "0000_uppdragsbanken_schema",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1792494058263,
+      "tag": "0001_add_other_organisation_description",
+      "breakpoints": true
     }
   ]
 }

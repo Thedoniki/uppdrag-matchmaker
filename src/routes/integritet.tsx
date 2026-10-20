@@ -6,6 +6,8 @@ export const Route = createFileRoute("/integritet")({
       { title: "Integritet – Uppdragsbanken Helsingborg" },
       { name: "description", content: "Så hanterar Uppdragsbanken Helsingborg personuppgifter." },
       { property: "og:title", content: "Integritet – Uppdragsbanken Helsingborg" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "Så hanterar Uppdragsbanken Helsingborg personuppgifter." },
     ],
   }),

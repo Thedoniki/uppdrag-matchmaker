@@ -21,6 +21,18 @@ describe("datumregel: 7 dagar till 12 månader", () => {
   it("avvisar datum 6 dagar fram", () => {
     expect(submitSchema(today).safeParse({ ...base, preferred_date: "2026-10-26" }).success).toBe(false);
   });
+  it("avvisar dagens datum som slutdatum", () => {
+    expect(submitSchema(today).safeParse({ ...base, preferred_date: "2026-10-20" }).success).toBe(false);
+  });
+  it("avvisar e-post utan @", () => {
+    expect(submitSchema(today).safeParse({ ...base, preferred_date: "2026-10-27", email: "anna.exempel.se" }).success).toBe(false);
+  });
+  it("kräver organisationstext när Annat väljs", () => {
+    expect(submitSchema(today).safeParse({ ...base, preferred_date: "2026-10-27", organisation_type: "Annat", organisation_type_other: "   " }).success).toBe(false);
+  });
+  it("godtar Annat med organisationstext", () => {
+    expect(submitSchema(today).safeParse({ ...base, preferred_date: "2026-10-27", organisation_type: "Annat", organisation_type_other: "Kommunal verksamhet" }).success).toBe(true);
+  });
   it("godtar datum 7 dagar fram", () => {
     expect(submitSchema(today).safeParse({ ...base, preferred_date: "2026-10-27" }).success).toBe(true);
   });

@@ -26,6 +26,8 @@ export const Route = createFileRoute("/uppdrag/$id")({
           { title: `${loaderData.title} – Uppdragsbanken Helsingborg` },
           { name: "description", content: loaderData.need.slice(0, 155) },
           { property: "og:title", content: `${loaderData.title} – Uppdragsbanken Helsingborg` },
+          { property: "og:type", content: "website" },
+          { name: "twitter:card", content: "summary_large_image" },
           { property: "og:description", content: loaderData.need.slice(0, 155) },
         ]
       : [{ title: "Uppdrag – Uppdragsbanken Helsingborg" }, { name: "robots", content: "noindex" }],

@@ -1,10 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { z } from "zod";
 import { motion } from "framer-motion";
+import { format, parseISO } from "date-fns";
+import { sv } from "date-fns/locale";
+import { CalendarIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { supabase } from "@/integrations/supabase/client";
 import { CATEGORIES, ORGANISATION_TYPES } from "@/lib/assignments";
 import { dateBounds, submitSchema } from "@/lib/validation";
@@ -19,6 +25,8 @@ export const Route = createFileRoute("/lamna-uppdrag")({
       { name: "description", content: "Beskriv ett litet digitalt uppdrag för deltagare i Tech Talent." },
       { property: "og:title", content: "Lämna ett uppdrag – Uppdragsbanken Helsingborg" },
       { property: "og:description", content: "Beskriv ett litet digitalt uppdrag för deltagare i Tech Talent." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SubmitPage,
@@ -32,17 +40,20 @@ function SubmitPage() {
   const bounds = useMemo(() => dateBounds(), []);
   const [doneId, setDoneId] = useState<string | null>(null);
   const [failed, setFailed] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
   const {
     register,
     handleSubmit,
     watch,
     reset,
-    formState: { errors, isValid, isSubmitting },
+    control,
+    formState: { errors, isSubmitting },
   } = useForm<Values>({
     resolver: zodResolver(schema),
     mode: "onTouched",
     defaultValues: {
       organisation_name: "",
+      organisation_type_other: "",
       title: "",
       need: "",
       preferred_date: "",
@@ -53,6 +64,7 @@ function SubmitPage() {
     },
   });
   const need = watch("need") ?? "";
+  const organisationType = watch("organisation_type");
 
   const onSubmit = async (v: Values) => {
     setFailed(false);
@@ -65,6 +77,7 @@ function SubmitPage() {
       id,
       organisation_name: v.organisation_name.trim(),
       organisation_type: v.organisation_type,
+      organisation_type_other: v.organisation_type === "Annat" ? (v.organisation_type_other?.trim() ?? null) : null,
       title: v.title.trim(),
       need: v.need.trim(),
       category: v.category,
@@ -133,6 +146,11 @@ function SubmitPage() {
                   {ORGANISATION_TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
                 </select>
               </Field>
+              {organisationType === "Annat" && (
+                <Field id="organisation_type_other" label="Ange typ av organisation" required error={errors.organisation_type_other?.message}>
+                  <input id="organisation_type_other" className={inputCls} maxLength={120} placeholder="Beskriv er organisationstyp" required aria-invalid={!!errors.organisation_type_other} aria-describedby={errors.organisation_type_other ? "organisation_type_other-error" : undefined} {...register("organisation_type_other")} />
+                </Field>
+              )}
               <Field id="title" label="Uppdragets titel" required error={errors.title?.message}>
                 <input id="title" className={inputCls} placeholder="Ge ert uppdrag en kort titel" aria-invalid={!!errors.title} {...register("title")} />
               </Field>
@@ -152,14 +170,26 @@ function SubmitPage() {
                   {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
                 </select>
               </Field>
-              <Field id="preferred_date" label="Önskat slutdatum" required hint="Välj ett datum" error={errors.preferred_date?.message}>
-                <input id="preferred_date" type="date" min={bounds.min} max={bounds.max} className={inputCls} aria-invalid={!!errors.preferred_date} {...register("preferred_date")} />
+              <Field id="preferred_date" label="Önskat slutdatum" required hint="Välj ett datum mellan 7 dagar och 12 månader från idag." error={errors.preferred_date?.message}>
+                <Controller name="preferred_date" control={control} render={({ field }) => (
+                  <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                    <PopoverTrigger asChild>
+                      <Button id="preferred_date" type="button" variant="outline" ref={field.ref} onBlur={field.onBlur} className={`${inputCls} h-auto justify-start font-normal`} aria-invalid={!!errors.preferred_date} aria-describedby={errors.preferred_date ? "preferred_date-error" : undefined}>
+                        <CalendarIcon />
+                        {field.value ? format(parseISO(field.value), "PPP", { locale: sv }) : "Välj ett datum"}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="pointer-events-auto w-auto p-0" align="start">
+                      <Calendar mode="single" locale={sv} selected={field.value ? parseISO(field.value) : undefined} defaultMonth={field.value ? parseISO(field.value) : new Date()} disabled={{ before: parseISO(bounds.min), after: parseISO(bounds.max) }} onSelect={(date) => { field.onChange(date ? format(date, "yyyy-MM-dd") : ""); setCalendarOpen(false); }} autoFocus className="pointer-events-auto" />
+                    </PopoverContent>
+                  </Popover>
+                )} />
               </Field>
               <Field id="contact_person" label="Kontaktperson" required error={errors.contact_person?.message}>
                 <input id="contact_person" className={inputCls} placeholder="Ditt namn" aria-invalid={!!errors.contact_person} {...register("contact_person")} />
               </Field>
               <Field id="email" label="E-postadress" required error={errors.email?.message}>
-                <input id="email" type="email" className={inputCls} placeholder="namn@exempel.se" aria-invalid={!!errors.email} {...register("email")} />
+                <input id="email" type="email" className={inputCls} placeholder="namn@exempel.se" aria-invalid={!!errors.email} aria-describedby={errors.email ? "email-error" : undefined} {...register("email")} />
               </Field>
               <Field id="phone" label="Telefon" error={errors.phone?.message}>
                 <input id="phone" type="tel" className={inputCls} placeholder="042-00 00 00" aria-invalid={!!errors.phone} {...register("phone")} />
@@ -179,9 +209,9 @@ function SubmitPage() {
             </div>
             <hr className="my-8 border-border" />
             {failed && <p role="alert" className="mb-4 font-semibold text-destructive">Något gick fel. Försök igen.</p>}
-            <button type="submit" disabled={!isValid || isSubmitting} className={btnPrimary}>
+            <Button type="submit" disabled={isSubmitting} className={`${btnPrimary} h-auto whitespace-normal`}>
               {isSubmitting ? (<><Spinner /> Skickar...</>) : "Skicka förfrågan"}
-            </button>
+            </Button>
             <p className="mt-3 text-base text-muted-foreground">Fält markerade med <span className="text-accent">*</span> är obligatoriska.</p>
           </form>
         </>
