@@ -20,4 +20,5 @@
 - Maintain a single AuthProvider session subscriber in the root to synchronize roles, navigation and query caches.
 - Use shared PageBreadcrumbs on content pages; Hem links to the main site, Uppdragsbanken to the local homepage, and assignment details include the list parent so navigation reflects the site hierarchy.
 - AI reviews run through authenticated admin-validated AI Gateway server functions, send only assignment content, and return questions without writes; description-only updates require explicit confirmation and compare the original text to prevent stale overwrites.
+- Keep assignment review state in one reviewed_at column that is read only through an admin-validated server function and written only by an explicit admin action, so the public list query never carries review data.
 - Pre-optimize React and the admin dialog together in Vite so late-loading admin controls cannot mix optimized React instances in an existing preview session.
