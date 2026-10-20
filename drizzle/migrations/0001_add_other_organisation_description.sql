@@ -1,0 +1,2 @@
+ALTER TABLE public.assignments ADD COLUMN organisation_type_other text;
+COMMENT ON COLUMN public.assignments.organisation_type_other IS 'User-provided organisation type when organisation_type is Annat.';
