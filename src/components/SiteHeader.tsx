@@ -28,7 +28,7 @@ export function SiteHeader() {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="px-3 py-3 text-base">
-            <a href="https://techtraineetalent.se/#kontakt" target="_blank" rel="noreferrer" onClick={close}>Kontakta oss</a>
+            <a href="mailto:info@techtraineetalent.se" onClick={close}>Kontakta oss</a>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
