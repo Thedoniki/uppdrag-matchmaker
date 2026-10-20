@@ -12,6 +12,8 @@ export const Route = createFileRoute("/uppdrag/")({
       { title: "Se uppdrag – Uppdragsbanken Helsingborg" },
       { name: "description", content: "Bläddra bland digitala uppdrag från företag och föreningar i Helsingborg." },
       { property: "og:title", content: "Se uppdrag – Uppdragsbanken Helsingborg" },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
       { property: "og:description", content: "Bläddra bland digitala uppdrag från företag och föreningar i Helsingborg." },
     ],
   }),

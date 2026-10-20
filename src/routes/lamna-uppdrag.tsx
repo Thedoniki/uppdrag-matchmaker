@@ -77,7 +77,7 @@ function SubmitPage() {
       id,
       organisation_name: v.organisation_name.trim(),
       organisation_type: v.organisation_type,
-      organisation_type_other: v.organisation_type === "Annat" ? v.organisation_type_other?.trim() : null,
+      organisation_type_other: v.organisation_type === "Annat" ? (v.organisation_type_other?.trim() ?? null) : null,
       title: v.title.trim(),
       need: v.need.trim(),
       category: v.category,
