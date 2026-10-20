@@ -31,7 +31,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (attempt < 4) { setTimeout(() => { if (active) void refresh(attempt + 1); }, 800 * (attempt + 1)); }
         if (failed) return; // keep previous role state instead of hiding admin buttons
       }
-      setState({ user, isAdmin: canManageAssignments(roles.map(r => r.role as never)), loading: false });
+      setState({ user, isAdmin: canManageAssignments(roles.map(r => r.role)), loading: false });
     }
     void refresh();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(event => {
