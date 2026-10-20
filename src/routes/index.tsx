@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import { arrow, btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
+import samarbetePhoto from "@/assets/samarbete-photo.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,6 +59,29 @@ function Index() {
               </Reveal>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="bg-primary-hover text-primary-foreground">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 py-16 md:grid-cols-2 md:gap-12 md:py-20">
+          <Reveal>
+            <p className="text-sm font-bold uppercase tracking-[0.18em] opacity-80">Samarbete</p>
+            <h2 className="mt-3 text-4xl md:text-5xl">Ett partnerskap för framtiden</h2>
+            <p className="mt-5 max-w-xl text-lg opacity-90 md:text-xl">
+              Tech Talent är ett resultat av samarbete mellan näringslivet, kommuner och
+              arbetsmarknadsförvaltningen på Helsingborgs stad. Tillsammans bygger vi en mer
+              inkluderande tech-bransch med fokus på långsiktig hållbarhet.
+            </p>
+          </Reveal>
+          <Reveal delay={0.1}>
+            <div className="overflow-hidden rounded-3xl ring-1 ring-primary-foreground/15">
+              <img
+                src={samarbetePhoto.url}
+                alt="Studenter i Tech Talent samlade kring en dator i ett klassrum."
+                className="aspect-[711/428] h-full w-full object-cover"
+              />
+            </div>
+          </Reveal>
         </div>
       </section>
 
