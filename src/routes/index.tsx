@@ -3,6 +3,7 @@ import { Reveal } from "@/components/Reveal";
 import { arrow, btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
 import { useAppAuth } from "@/components/AuthProvider";
 import samarbetePhoto from "@/assets/samarbete-photo.jpg.asset.json";
+import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -29,7 +30,8 @@ function Index() {
 
   return (
     <>
-      <section className="mx-auto max-w-6xl px-4 py-20 md:py-28">
+      <section className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:pt-10 md:pb-28">
+        <PageBreadcrumbs current="Uppdragsbanken" />
         <Reveal>
           <p className={eyebrow}>Ett initiativ av Tech Talent</p>
           <h1 className="mt-3 text-4xl sm:text-5xl md:text-7xl">Uppdragsbanken</h1>
