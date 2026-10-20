@@ -1,7 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { assignmentsQuery } from "@/lib/assignments";
-import { AssignmentCard } from "@/components/AssignmentCard";
 import { Reveal } from "@/components/Reveal";
 import { arrow, btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
 
@@ -14,7 +11,6 @@ export const Route = createFileRoute("/")({
       { property: "og:description", content: "Lämna små digitala uppdrag till deltagare i Tech Talent i Helsingborg." },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(assignmentsQuery(6)),
   component: Index,
 });
 
@@ -25,7 +21,6 @@ const steps = [
 ];
 
 function Index() {
-  const { data } = useSuspenseQuery(assignmentsQuery(6));
   return (
     <>
       <section className="mx-auto max-w-6xl px-4 py-20 md:py-28">
@@ -64,18 +59,6 @@ function Index() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-20">
-        <Reveal>
-          <h2 className="text-4xl md:text-5xl">Aktuella uppdrag</h2>
-        </Reveal>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {data.map((a, i) => (
-            <Reveal key={a.id} delay={i * 0.06} className="h-full">
-              <AssignmentCard a={a} />
-            </Reveal>
-          ))}
-        </div>
-      </section>
     </>
   );
 }
