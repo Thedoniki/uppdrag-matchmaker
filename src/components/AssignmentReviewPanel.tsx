@@ -84,7 +84,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
     {saved && <p role="status" className="mt-4 rounded-lg bg-secondary px-4 py-3 font-semibold text-secondary-foreground">Den bekräftade beskrivningen är sparad.</p>}
     <Dialog open={opened} onOpenChange={open => { if (!saving) { setOpened(open); if (!open) setConfirming(false); } }}>
       <DialogContent className="max-h-[90dvh] w-[calc(100%-1.5rem)] max-w-6xl gap-5 overflow-y-auto rounded-xl p-5 sm:p-7">
-        <DialogHeader className="gap-1.5">
+        <DialogHeader className="text-left">
           <DialogTitle className="text-2xl leading-snug">{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
           <DialogDescription className="text-base">{assignment.title}</DialogDescription>
         </DialogHeader>
@@ -94,7 +94,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
         </p>}
         {error && <p role="alert" className="rounded-xl border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
 
-        {!confirming && result && <div className="space-y-6">
+        {!confirming && result && <div className="space-y-5">
           <section className="rounded-xl border border-primary/20 bg-secondary p-5">
             <h3 className="flex items-center gap-2 text-sm font-bold uppercase tracking-wide text-secondary-foreground">
               <Sparkles className="size-4" aria-hidden="true" />Sammanfattning
@@ -103,22 +103,22 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
           </section>
 
           {result.missing.length ? <section>
-            <h3 className="text-lg font-bold">Saknade uppgifter</h3>
-            <ul className="mt-3 grid gap-3 md:grid-cols-2">
-              {result.missing.map((item, index) => <li key={index} className="rounded-xl border border-border bg-card p-4 shadow-soft">
+            <h3 className={SECTION_LABEL}>Saknade uppgifter</h3>
+            <ul className="grid gap-3 md:grid-cols-2">
+              {result.missing.map((item, index) => <li key={index} className="flex flex-col rounded-xl border border-border bg-card p-4 shadow-soft">
                 <h4 className="text-lg font-bold">{item.label}</h4>
-                <p className="mt-1.5 text-base leading-relaxed text-foreground/85">{item.reason}</p>
-                <p className="mt-3 rounded-lg bg-muted/70 px-3 py-2 text-base font-semibold text-foreground">{item.question}</p>
+                <p className="mt-1.5 mb-3 text-base leading-relaxed text-foreground/85">{item.reason}</p>
+                <p className="mt-auto rounded-lg bg-muted/70 px-3 py-2 text-base font-semibold text-foreground">{item.question}</p>
               </li>)}
             </ul>
           </section> : <p className="rounded-xl border border-border bg-card p-4 text-base text-foreground/85">Inga tydligt saknade uppgifter hittades.</p>}
 
-          <section className="grid gap-5 lg:grid-cols-2">
-            <div>
+          <section className="grid items-stretch gap-5 lg:grid-cols-2">
+            <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Nuvarande beskrivning</h3>
-              <p className="min-h-44 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
+              <p className="min-h-44 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
             </div>
-            <div>
+            <div className="flex flex-col">
               <label htmlFor={`review-${assignment.id}`} className={`${SECTION_LABEL} block`}>Kompletterad beskrivning</label>
               <textarea
                 id={`review-${assignment.id}`}
@@ -126,7 +126,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
                 onChange={event => { setDraft(event.target.value); setSaved(false); }}
                 maxLength={600}
                 rows={8}
-                className="min-h-44 w-full resize-none rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
+                className="min-h-44 w-full flex-1 resize-none rounded-xl border-2 border-input bg-card p-4 text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-ring/30"
               />
               <p className="mt-2 text-right text-sm text-muted-foreground">{draft.length}/600 tecken</p>
             </div>
@@ -141,14 +141,14 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
 
         {confirming && <>
           <p className="rounded-xl border border-border bg-muted/70 p-4 text-base text-foreground/85">Endast beskrivningen ändras. Uppdraget markeras som granskat när du bekräftar.</p>
-          <div className="grid gap-5 lg:grid-cols-2">
-            <div>
+          <div className="grid items-stretch gap-5 lg:grid-cols-2">
+            <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Före</h3>
-              <p className="min-h-32 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
+              <p className="min-h-32 flex-1 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
             </div>
-            <div>
+            <div className="flex flex-col">
               <h3 className={SECTION_LABEL}>Efter</h3>
-              <p className="min-h-32 whitespace-pre-wrap break-words rounded-xl border border-primary/30 bg-secondary p-4">{draft.trim()}</p>
+              <p className="min-h-32 flex-1 whitespace-pre-wrap break-words rounded-xl border border-primary/30 bg-secondary p-4">{draft.trim()}</p>
             </div>
           </div>
           <DialogFooter className="gap-3 border-t border-border pt-5 sm:space-x-0">
