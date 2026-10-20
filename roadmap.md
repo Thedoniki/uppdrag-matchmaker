@@ -1,5 +1,5 @@
 # Roadmap
-- [ ] Granskningsdialogen: förklaringen och frågan i varje kort ska ha ett litet, jämnt avstånd till varandra.
+- [x] Granskningsdialogen: förklaringen och frågan i varje kort ska ha ett litet, jämnt avstånd till varandra
 - [x] Uppdragskort: visa tydligt för administratörer om uppdraget väntar på granskning eller redan är granskat (admin-endast, testad i webbläsaren)
 - [x] Granskningsdialogen: större och tydligare text (särskilt förklaringen under varje saknad uppgift)
 - [x] Granskningsdialogen: bredare så mörkret runt den minskar, tätare avstånd, tydligare bakgrundsrutor och lämpligare placering av beskrivningstexten
