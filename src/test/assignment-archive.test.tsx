@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { AssignmentArchive } from "@/components/AssignmentArchive";
@@ -45,7 +44,7 @@ describe("AssignmentArchive", () => {
     expect(alert).toHaveTextContent("Arkiverade uppdrag kunde inte hämtas");
     const retry = screen.getByRole("button", { name: "Försök igen" });
 
-    await userEvent.click(retry);
+    fireEvent.click(retry);
 
     await waitFor(() => expect(screen.getByText("Testuppdrag")).toBeInTheDocument());
     expect(calls).toBe(2);
