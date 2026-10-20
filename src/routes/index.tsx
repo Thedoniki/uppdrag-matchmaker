@@ -72,6 +72,15 @@ function Index() {
               arbetsmarknadsförvaltningen på Helsingborgs stad. Tillsammans bygger vi en mer
               inkluderande tech-bransch med fokus på långsiktig hållbarhet.
             </p>
+            <a
+              href="https://techtraineetalent.se/samarbetspartners"
+              target="_blank"
+              rel="noreferrer"
+              className="group mt-6 inline-flex min-h-11 items-center gap-2 font-semibold underline-offset-4 hover:underline"
+            >
+              Läs mer om våra samarbetspartners
+              <span className="transition-transform group-hover:translate-x-1">→</span>
+            </a>
           </Reveal>
           <Reveal delay={0.1}>
             <div className="overflow-hidden rounded-2xl ring-1 ring-primary-foreground/15 md:rounded-3xl">
