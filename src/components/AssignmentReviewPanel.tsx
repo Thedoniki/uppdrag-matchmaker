@@ -21,9 +21,10 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
   const [confirming, setConfirming] = useState(false);
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   async function generate() {
-    setBusy(true); setError(""); setSaved(false);
+    setOpened(true); setBusy(true); setError(""); setSaved(false);
     try {
       const response = await review({ data: { id: assignment.id } });
       if (!response.ok) { setError(response.error); return; }
@@ -42,21 +43,24 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
     setSaving(true); setError("");
     try {
       await save({ data: { id: assignment.id, original, need: draft, confirmed: true } });
-      setOriginal(draft.trim()); setDraft(draft.trim()); setSaved(true); setConfirming(false); setResult(null);
+      setOriginal(draft.trim()); setDraft(draft.trim()); setSaved(true); setConfirming(false); setResult(null); setOpened(false);
       await Promise.all([queryClient.invalidateQueries({ queryKey: ["assignments"] }), queryClient.invalidateQueries({ queryKey: ["assignment", assignment.id] })]);
     } catch (error) { setError(error instanceof Error ? error.message : "Ändringen kunde inte sparas."); setConfirming(false); }
     finally { setSaving(false); }
   }
 
-  return <article className="rounded-lg border-2 border-border bg-card p-5 shadow-soft sm:p-6">
-    <div className="flex flex-wrap items-center justify-between gap-4">
-      <div className="min-w-0"><h3 className="break-words text-xl">{assignment.title}</h3><p className="text-muted-foreground">{assignment.organisation_name}</p></div>
-      <Button onClick={generate} disabled={busy || saving || result !== null} variant="secondary" className="min-h-11">
-        {busy ? <LoaderCircle className="animate-spin motion-reduce:animate-none" /> : <Sparkles />} {busy ? "Granskar…" : "Granska med AI"}
+  return <div className="mt-4 border-t border-border pt-4">
+      <Button onClick={() => { if (result) setOpened(true); else void generate(); }} disabled={busy || saving} variant="secondary" className="min-h-11 w-full">
+        {busy ? <LoaderCircle className="animate-spin motion-reduce:animate-none" /> : <Sparkles />} {busy ? "Granskar…" : result ? "Visa AI-förslag" : "Granska med AI"}
       </Button>
-    </div>
-    {error && <p role="alert" className="mt-4 rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
     {saved && <p role="status" className="mt-4 font-semibold text-primary">Den bekräftade beskrivningen är sparad.</p>}
+    <Dialog open={opened} onOpenChange={open => { if (!saving) { setOpened(open); if (!open) setConfirming(false); } }}>
+      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-3xl overflow-y-auto rounded-lg">
+        <DialogTitle>{confirming ? "Bekräfta ändring av uppdrag" : "Granska uppdrag med AI"}</DialogTitle>
+        <DialogDescription>{assignment.title}</DialogDescription>
+        {busy && <p role="status" className="flex items-center gap-2"><LoaderCircle className="size-5 animate-spin" />Granskar…</p>}
+        {error && <p role="alert" className="rounded-lg border border-destructive/40 bg-destructive/10 p-4 text-destructive">{error}</p>}
+        {!confirming && <>
     {result && <div className="mt-5 border-t border-border pt-5">
       <p className="font-semibold">{result.summary}</p>
       {result.missing.length ? <ul className="mt-4 divide-y divide-border">{result.missing.map((item, index) => <li key={index} className="py-3 first:pt-0">
@@ -70,27 +74,22 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
         </div>
       </div>
       <div className="mt-4 flex flex-wrap justify-end gap-3">
-        <Button variant="outline" className="min-h-11" onClick={() => { setResult(null); setDraft(original); setError(""); }}>Avvisa förslag</Button>
+        <Button variant="outline" className="min-h-11" onClick={() => { setResult(null); setDraft(original); setError(""); setOpened(false); }}>Avvisa förslag</Button>
         <Button className="min-h-11" onClick={preview} disabled={draft.trim() === original.trim()}><ClipboardCheck />Förhandsgranska ändring</Button>
       </div>
     </div>}
-    <Dialog open={confirming} onOpenChange={open => { if (!saving) setConfirming(open); }}>
-      <DialogContent className="max-h-[85dvh] w-[calc(100%-2rem)] max-w-2xl overflow-y-auto rounded-lg">
-        <DialogTitle>Bekräfta ändring av uppdrag</DialogTitle>
-        <DialogDescription>{assignment.title}</DialogDescription>
+        </>}
+        {confirming && <>
         <div className="grid gap-5 sm:grid-cols-2"><div><h4 className="mb-2 font-bold">Före</h4><p className="whitespace-pre-wrap break-words text-muted-foreground">{original}</p></div><div><h4 className="mb-2 font-bold">Efter</h4><p className="whitespace-pre-wrap break-words">{draft.trim()}</p></div></div>
         <DialogFooter className="gap-3"><Button variant="outline" className="min-h-11" disabled={saving} onClick={() => setConfirming(false)}>Avbryt</Button><Button className="min-h-11" disabled={saving} onClick={confirm}>{saving && <LoaderCircle className="animate-spin" />}{saving ? "Sparar…" : "Bekräfta och spara"}</Button></DialogFooter>
+        </>}
       </DialogContent>
     </Dialog>
-  </article>;
+  </div>;
 }
 
-export function AssignmentReviewPanel({ assignments }: { assignments: Assignment[] }) {
+export function AssignmentReviewPanel({ assignment }: { assignment: Assignment }) {
   const { isAdmin, user } = useAppAuth();
-  if (!isAdmin || !user) return null;
-  const fresh = assignments.filter(assignment => assignment.status === "Ny").sort((a, b) => b.created_at.localeCompare(a.created_at));
-  return <section className="mt-12 border-t border-border pt-8" aria-label="AI-granskning">
-    <h2 className="flex items-center gap-3 text-3xl"><ClipboardCheck className="size-7 shrink-0 text-primary" />Granska nya uppdrag</h2>
-    {fresh.length ? <div className="mt-5 grid gap-5">{fresh.map(assignment => <ReviewItem key={`${user.id}-${assignment.id}`} assignment={assignment} />)}</div> : <p className="mt-4 text-muted-foreground">Inga nya uppdrag att granska.</p>}
-  </section>;
+  if (!isAdmin || !user || assignment.status !== "Ny") return null;
+  return <ReviewItem key={`${user.id}-${assignment.id}`} assignment={assignment} />;
 }

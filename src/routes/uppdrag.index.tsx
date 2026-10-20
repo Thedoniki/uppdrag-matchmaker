@@ -5,7 +5,6 @@ import { assignmentsQuery, SORT_OPTIONS, sortAssignments, type SortBy } from "@/
 import { AssignmentCard } from "@/components/AssignmentCard";
 import { Reveal } from "@/components/Reveal";
 import { AssignmentArchive } from "@/components/AssignmentArchive";
-import { AssignmentReviewPanel } from "@/components/AssignmentReviewPanel";
 import { arrow, btnPrimary } from "@/components/buttons";
 import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 
@@ -69,7 +68,6 @@ function ListPage() {
           ))}
         </div>
       )}
-      <AssignmentReviewPanel assignments={data} />
       <AssignmentArchive />
     </section>
   );
