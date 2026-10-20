@@ -1,5 +1,6 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
+import { ArrowLeft, Building2, Calendar, ShieldCheck } from "lucide-react";
 import { assignmentQuery, formatDate, interestText } from "@/lib/assignments";
 import { CategoryTag } from "@/components/AssignmentCard";
 import { Reveal } from "@/components/Reveal";
