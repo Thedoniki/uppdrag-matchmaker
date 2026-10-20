@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { assignmentsQuery, SORT_OPTIONS, sortAssignments, type SortBy } from "@/lib/assignments";
 import { AssignmentCard } from "@/components/AssignmentCard";
 import { Reveal } from "@/components/Reveal";
+import { AssignmentArchive } from "@/components/AssignmentArchive";
 import { arrow, btnPrimary } from "@/components/buttons";
 
 export const Route = createFileRoute("/uppdrag/")({
@@ -65,6 +66,7 @@ function ListPage() {
           ))}
         </div>
       )}
+      <AssignmentArchive />
     </section>
   );
 }

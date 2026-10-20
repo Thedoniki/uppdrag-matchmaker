@@ -32,7 +32,7 @@ export const assignmentsQuery = (limit?: number) =>
   queryOptions({
     queryKey: ["assignments", limit ?? "all"],
     queryFn: async (): Promise<Assignment[]> => {
-      let q = supabase.from("assignments").select(PUBLIC_COLUMNS).order("created_at", { ascending: false });
+      let q = supabase.from("assignments").select(PUBLIC_COLUMNS).is("archived_at", null).order("created_at", { ascending: false });
       if (limit) q = q.limit(limit);
       const { data, error } = await q;
       if (error) throw error;
@@ -44,7 +44,7 @@ export const assignmentQuery = (id: string) =>
   queryOptions({
     queryKey: ["assignment", id],
     queryFn: async (): Promise<Assignment | null> => {
-      const { data, error } = await supabase.from("assignments").select(PUBLIC_COLUMNS).eq("id", id).maybeSingle();
+      const { data, error } = await supabase.from("assignments").select(PUBLIC_COLUMNS).eq("id", id).is("archived_at", null).maybeSingle();
       if (error) throw error;
       return data;
     },

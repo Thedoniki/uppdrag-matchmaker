@@ -1,5 +1,8 @@
 # Uppgifter
-- [ ] Ersätt Anmäl intresse med Ta bort och Arkivera efter beslut om vem som får hantera uppdrag.
+- [x] Ändra etiketten på uppdragssidan till Uppdrag utan att ändra kategorierna.
+- [x] Uppdatera kontaktinformationen och Kontakta oss till info@techtraineetalent.se och Helsingborg, Sverige.
+- [x] Ersätt Anmäl intresse med Ta bort och Arkivera endast för administratörer.
+- [x] Tilldela första administratören och testa arkivering, återställning och radering inloggat.
 - [x] Ersätt sidhuvudets loggor med uppladdad symbol och ordmärke till höger.
 - [x] Samla uppdragslänkar och Kontakta oss under Uppdragsbanken.
 - [x] Kontrollera meny, länkar och loggor.

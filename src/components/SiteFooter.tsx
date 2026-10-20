@@ -23,7 +23,9 @@ export function SiteFooter() {
           <a href="https://techtraineetalent.se" target="_blank" rel="noreferrer" className="group font-semibold underline-offset-4 hover:underline">
             Läs mer om Tech Talent <span className="inline-block transition-transform group-hover:translate-x-[3px]">→</span>
           </a>
-          <p>Kontakt: kontakt@techtalent-exempel.se</p>
+          <p className="font-semibold">Kontakt</p>
+          <a href="mailto:info@techtraineetalent.se" className="hover:underline">info@techtraineetalent.se</a>
+          <p>Helsingborg, Sverige</p>
           <Link to="/integritet" className="text-sm underline-offset-4 hover:underline">
             Integritet
           </Link>
