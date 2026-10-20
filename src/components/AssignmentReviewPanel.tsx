@@ -13,6 +13,10 @@ import type { Assignment } from "@/lib/assignments";
 // One label style for every block in the dialog, so the sections read as a list of steps.
 const SECTION_LABEL = "mb-2 text-sm font-bold uppercase tracking-wide text-muted-foreground";
 
+// On phones the buttons stay pinned to the bottom of the dialog so they are always reachable without
+// scrolling away from the text; from the small-screen breakpoint up the footer flows like before.
+const FOOTER = "sticky bottom-0 -mx-4 -mb-4 gap-2 border-t border-border bg-background px-4 pb-4 pt-3 sm:static sm:mx-0 sm:mb-0 sm:gap-3 sm:bg-transparent sm:px-0 sm:pb-0 sm:pt-5 sm:space-x-0";
+
 function ReviewItem({ assignment }: { assignment: Assignment }) {
   const review = useServerFn(reviewAssignment);
   const save = useServerFn(confirmAssignmentReview);
@@ -141,7 +145,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
           </DialogFooter>
         </div>}
 
-        {confirming && <>
+        {confirming && <div className="space-y-3 sm:space-y-4">
           <p className="rounded-xl border border-border bg-muted/70 p-4 text-base text-foreground/85">Endast beskrivningen ändras. Uppdraget markeras som granskat när du bekräftar.</p>
           <div className="grid items-stretch gap-3 lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col">
@@ -157,7 +161,7 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
             <Button variant="outline" className="min-h-11" disabled={saving} onClick={() => setConfirming(false)}>Avbryt</Button>
             <Button className="min-h-11" disabled={saving} onClick={confirm}>{saving && <LoaderCircle className="animate-spin motion-reduce:animate-none" />}{saving ? "Sparar…" : "Bekräfta och spara"}</Button>
           </DialogFooter>
-        </>}
+        </div>}
       </DialogContent>
     </Dialog>
   </div>;
