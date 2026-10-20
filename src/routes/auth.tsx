@@ -6,6 +6,7 @@ import { useAppAuth } from "@/components/AuthProvider";
 import { Button } from "@/components/ui/button";
 import { Field, Spinner, inputCls } from "@/components/FormField";
 import { btnPrimary } from "@/components/buttons";
+import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 import "@lovable.dev/cloud-auth-js/styles.css";
 
 export const Route = createFileRoute("/auth")({
@@ -40,7 +41,7 @@ function AuthPage() {
     setBusy(false);
     if (signInError) setError("Fel e-postadress eller lösenord. Försök igen.");
   }
-  return <section className="mx-auto max-w-lg px-4 py-16"><h1 className="text-4xl">Administratörsinloggning</h1>
+  return <section className="mx-auto max-w-lg px-4 pb-16 pt-6 sm:pt-10"><PageBreadcrumbs current="Administratörsinloggning" /><h1 className="break-words text-4xl">Administratörsinloggning</h1>
     {user ? <><p className="mt-6">Du är inloggad men saknar administratörsbehörighet.</p><Link to="/uppdrag" className="mt-6 inline-block text-primary underline">Till uppdragen</Link></> : <>
       <form onSubmit={loginWithPassword} className="mt-8 rounded-xl border border-border bg-card p-6 shadow-soft">
         <Field id="login-email" label="E-postadress" required>

@@ -6,6 +6,7 @@ import { AssignmentCard } from "@/components/AssignmentCard";
 import { Reveal } from "@/components/Reveal";
 import { AssignmentArchive } from "@/components/AssignmentArchive";
 import { arrow, btnPrimary } from "@/components/buttons";
+import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 
 export const Route = createFileRoute("/uppdrag/")({
   head: () => ({
@@ -28,7 +29,8 @@ function ListPage() {
   const items = useMemo(() => sortAssignments(data, sortBy), [data, sortBy]);
 
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16">
+    <section className="mx-auto max-w-6xl px-4 pb-16 pt-6 sm:pt-10">
+      <PageBreadcrumbs current="Se uppdrag" />
       <Reveal>
         <div className="flex flex-wrap items-end justify-between gap-4">
           <h1 className="text-4xl md:text-5xl">Aktuella uppdrag</h1>

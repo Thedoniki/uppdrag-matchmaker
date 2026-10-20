@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { ArrowLeft, Building2, Calendar, ShieldCheck } from "lucide-react";
+import { Building2, Calendar, ShieldCheck } from "lucide-react";
+import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 import { assignmentQuery, formatDate, interestText } from "@/lib/assignments";
 import { CategoryTag } from "@/components/AssignmentCard";
 import { Reveal } from "@/components/Reveal";
@@ -41,15 +42,9 @@ function DetailPage() {
 
   return (
     <section className="mx-auto w-full max-w-full px-3 py-6 sm:max-w-2xl sm:px-6 sm:py-10 lg:max-w-4xl">
-      <Link
-        to="/uppdrag"
-        className="group inline-flex items-center gap-2 font-bold text-primary hover:text-primary-hover"
-      >
-        <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-[3px] motion-reduce:transition-none" aria-hidden="true" />
-        Tillbaka till alla uppdrag
-      </Link>
+      <PageBreadcrumbs current={a.title} assignment />
       <Reveal>
-        <article className="mt-4 overflow-hidden rounded-xl border border-border bg-card shadow-soft">
+        <article className="overflow-hidden rounded-xl border border-border bg-card shadow-soft">
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border bg-muted/60 px-4 py-3 sm:px-6 md:px-8">
             <div className="flex flex-wrap items-center gap-2">
               <CategoryTag>Uppdrag</CategoryTag>

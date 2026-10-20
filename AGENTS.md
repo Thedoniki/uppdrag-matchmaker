@@ -17,3 +17,4 @@
 - Store admin roles only in protected user_roles; assignment deletion and archive updates are authorized by database RLS, never browser state alone.
 - Keep archived assignments out of public list/detail queries; authenticated archive reads use server functions with RLS and admin validation.
 - Maintain a single AuthProvider session subscriber in the root to synchronize roles, navigation and query caches.
+- Use shared PageBreadcrumbs on content pages; Hem links to the main site, Uppdragsbanken to the local homepage, and assignment details include the list parent so navigation reflects the site hierarchy.

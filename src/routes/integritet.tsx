@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 
 export const Route = createFileRoute("/integritet")({
   head: () => ({
@@ -16,7 +17,8 @@ export const Route = createFileRoute("/integritet")({
 
 function PrivacyPage() {
   return (
-    <section className="mx-auto max-w-3xl px-4 py-16">
+    <section className="mx-auto max-w-3xl px-4 pb-16 pt-6 sm:pt-10">
+      <PageBreadcrumbs current="Integritet" />
       <h1 className="text-4xl md:text-5xl">Integritet</h1>
       <div className="mt-8 rounded-xl border border-border bg-card p-8 text-lg shadow-soft">
         <p>

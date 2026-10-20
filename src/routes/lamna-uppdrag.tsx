@@ -18,6 +18,7 @@ import { Field, Spinner, inputCls } from "@/components/FormField";
 import { useAppAuth } from "@/components/AuthProvider";
 import { Reveal, SuccessCheck } from "@/components/Reveal";
 import { btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
+import { PageBreadcrumbs } from "@/components/PageBreadcrumbs";
 
 export const Route = createFileRoute("/lamna-uppdrag")({
   head: () => ({
@@ -107,7 +108,8 @@ function SubmitPage() {
   };
 
   return (
-    <section className="mx-auto max-w-3xl px-4 py-16">
+    <section className="mx-auto max-w-3xl px-4 pb-16 pt-6 sm:pt-10">
+      <PageBreadcrumbs current="Lämna ett uppdrag" />
       <Reveal>
         <p className={eyebrow}>För företag och föreningar</p>
         <h1 className="mt-3 text-4xl md:text-5xl">Lämna ett uppdrag</h1>
