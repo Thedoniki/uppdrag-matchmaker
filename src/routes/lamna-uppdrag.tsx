@@ -15,6 +15,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CATEGORIES, ORGANISATION_TYPES } from "@/lib/assignments";
 import { dateBounds, submitSchema } from "@/lib/validation";
 import { Field, Spinner, inputCls } from "@/components/FormField";
+import { useAppAuth } from "@/components/AuthProvider";
 import { Reveal, SuccessCheck } from "@/components/Reveal";
 import { btnPrimary, btnSecondary, eyebrow } from "@/components/buttons";
 
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/lamna-uppdrag")({
 type Values = z.infer<ReturnType<typeof submitSchema>>;
 
 function SubmitPage() {
+  const { isAdmin } = useAppAuth();
   const qc = useQueryClient();
   const schema = useMemo(() => submitSchema(), []);
   const bounds = useMemo(() => dateBounds(), []);
