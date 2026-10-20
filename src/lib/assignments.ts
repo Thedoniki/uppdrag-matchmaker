@@ -68,3 +68,39 @@ export function excerpt(text: string, max = 140) {
 export function interestText(n: number) {
   return n === 1 ? "1 team har anmält intresse" : `${n} team har anmält intresse`;
 }
+
+export const SORT_OPTIONS = [
+  { value: "nyast", label: "Nyast först" },
+  { value: "datum", label: "Datum (önskat slutdatum)" },
+  { value: "bokstav", label: "Bokstavsordning" },
+  { value: "kategori", label: "Kategori" },
+] as const;
+
+export type SortBy = (typeof SORT_OPTIONS)[number]["value"];
+
+const collator = new Intl.Collator("sv");
+const NO_DATE = "9999-12-31";
+
+// Sorting happens in the browser: the list is already fetched in full, so no extra request per option.
+export function sortAssignments(list: Assignment[], sortBy: SortBy): Assignment[] {
+  const items = [...list];
+  switch (sortBy) {
+    case "datum":
+      return items.sort(
+        (a, b) =>
+          (a.preferred_date ?? NO_DATE).localeCompare(b.preferred_date ?? NO_DATE) ||
+          collator.compare(a.title, b.title),
+      );
+    case "bokstav":
+      return items.sort((a, b) => collator.compare(a.title, b.title));
+    case "kategori":
+      return items.sort(
+        (a, b) => collator.compare(a.category, b.category) || collator.compare(a.title, b.title),
+      );
+    case "nyast":
+    default:
+      return items.sort(
+        (a, b) => b.created_at.localeCompare(a.created_at) || collator.compare(a.title, b.title),
+      );
+  }
+}
