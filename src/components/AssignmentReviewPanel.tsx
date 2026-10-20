@@ -106,17 +106,17 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
             <h3 className="text-lg font-bold">Saknade uppgifter</h3>
             <ul className="mt-3 grid gap-3 md:grid-cols-2">
               {result.missing.map((item, index) => <li key={index} className="rounded-xl border border-border bg-card p-4 shadow-soft">
-                <h4 className="font-bold">{item.label}</h4>
-                <p className="mt-1 text-sm text-muted-foreground">{item.reason}</p>
-                <p className="mt-3 rounded-lg bg-muted/70 px-3 py-2 font-semibold">{item.question}</p>
+                <h4 className="text-lg font-bold">{item.label}</h4>
+                <p className="mt-1.5 text-base leading-relaxed text-foreground/85">{item.reason}</p>
+                <p className="mt-3 rounded-lg bg-muted/70 px-3 py-2 text-base font-semibold text-foreground">{item.question}</p>
               </li>)}
             </ul>
-          </section> : <p className="rounded-xl border border-border bg-card p-4 text-muted-foreground">Inga tydligt saknade uppgifter hittades.</p>}
+          </section> : <p className="rounded-xl border border-border bg-card p-4 text-base text-foreground/85">Inga tydligt saknade uppgifter hittades.</p>}
 
           <section className="grid gap-5 lg:grid-cols-2">
             <div>
               <h3 className={SECTION_LABEL}>Nuvarande beskrivning</h3>
-              <p className="min-h-44 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-muted-foreground">{original}</p>
+              <p className="min-h-44 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
             </div>
             <div>
               <label htmlFor={`review-${assignment.id}`} className={`${SECTION_LABEL} block`}>Kompletterad beskrivning</label>
@@ -140,11 +140,11 @@ function ReviewItem({ assignment }: { assignment: Assignment }) {
         </div>}
 
         {confirming && <>
-          <p className="rounded-xl border border-border bg-muted/70 p-4 text-sm text-muted-foreground">Endast beskrivningen ändras. Uppdraget markeras som granskat när du bekräftar.</p>
+          <p className="rounded-xl border border-border bg-muted/70 p-4 text-base text-foreground/85">Endast beskrivningen ändras. Uppdraget markeras som granskat när du bekräftar.</p>
           <div className="grid gap-5 lg:grid-cols-2">
             <div>
               <h3 className={SECTION_LABEL}>Före</h3>
-              <p className="min-h-32 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-muted-foreground">{original}</p>
+              <p className="min-h-32 whitespace-pre-wrap break-words rounded-xl border border-border bg-card p-4 text-base text-foreground/85">{original}</p>
             </div>
             <div>
               <h3 className={SECTION_LABEL}>Efter</h3>
