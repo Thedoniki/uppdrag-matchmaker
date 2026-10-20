@@ -14,11 +14,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let active = true;
     let revision = 0;
-    async function refresh() {
+    async function refresh(attempt = 0): Promise<void> {
       const current = ++revision;
-      const { data: { user } } = await supabase.auth.getUser();
-      const { data: roles } = user ? await supabase.from("user_roles").select("role").eq("user_id", user.id) : { data: [] };
-      if (active && current === revision) setState({ user, isAdmin: canManageAssignments((roles ?? []).map(r => r.role)), loading: false });
+      // Session restore after reload can lag; fall back to the stored session and retry transient failures.
+      const { data: { session } } = await supabase.auth.getSession();
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+      const user = userData.user ?? (userError ? session?.user ?? null : null);
+      let roles: { role: string }[] = [];
+      let failed = false;
+      if (user) {
+        const res = await supabase.from("user_roles").select("role").eq("user_id", user.id);
+        if (res.error) failed = true; else roles = res.data ?? [];
+      }
+      if (!active || current !== revision) return;
+      if (failed || (userError && session)) {
+        if (attempt < 4) { setTimeout(() => { if (active) void refresh(attempt + 1); }, 800 * (attempt + 1)); }
+        if (failed) return; // keep previous role state instead of hiding admin buttons
+      }
+      setState({ user, isAdmin: canManageAssignments(roles.map(r => r.role)), loading: false });
     }
     void refresh();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(event => {
